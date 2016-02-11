@@ -15,3 +15,8 @@ The Spring Boot application class is RunAsDemoApplication.java. The Spring Secur
 So that there would be something to pass around in the REST calls there's an Account class, along with an AccountRepository interface.
 While basic CRUD is handled by Spring Data REST, I created a separate controller and service - SomeController and SomeService 
 respectively. It is the SomeService class that has the method level security annotation that requires the special "run as" privilege.
+
+To run the example you can simply do
+```
+$ mvn spring-boot:run
+```
