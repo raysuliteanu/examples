@@ -17,9 +17,9 @@ public class SomeService {
     private AccountRepository accountRepository;
 
     @PreAuthorize("hasRole('RUN_AS_ADMIN')")
-    public Account doSomething() {
+    public Account doSomething(final Account account) {
         LOG.info("should have ROLE_RUN_AS_ADMIN: {}", SecurityContextHolder.getContext().getAuthentication());
 
-        return null;
+        return account;
     }
 }
