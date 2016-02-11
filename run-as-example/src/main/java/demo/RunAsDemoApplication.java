@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -42,26 +41,22 @@ public class RunAsDemoApplication {
         @Override
         protected void configure(final HttpSecurity http) throws Exception {
             http
-                    .httpBasic().and()
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/something").hasRole("USER")
-                    .antMatchers(HttpMethod.GET, "/api/accounts").hasRole("USER")
-                    .antMatchers(HttpMethod.POST, "/api/accounts").hasRole("ADMIN")
-                    .antMatchers(HttpMethod.PUT, "/api/accounts/**").hasRole("ADMIN")
-                    .antMatchers(HttpMethod.PATCH, "/api/accounts/**").hasRole("ADMIN").and()
-                    .csrf().disable();
-        }
-
-        @Override
-        public void configure(final WebSecurity web) throws Exception {
+                .httpBasic().and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/something").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/accounts").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/accounts").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/accounts/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/accounts/**").hasRole("ADMIN").and()
+                .csrf().disable();
         }
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.inMemoryAuthentication()
-                    .withUser("userWith").password("password").roles("USER", "RUN_AS_ADMIN").and()
-                    .withUser("userWithout").password("password").roles("USER").and()
-                    .withUser("admin").password("admin").roles("USER", "ADMIN");
+                .withUser("userWith").password("password").roles("USER", "RUN_AS_ADMIN").and()
+                .withUser("userWithout").password("password").roles("USER").and()
+                .withUser("admin").password("admin").roles("USER", "ADMIN");
 
             auth.authenticationProvider(runAsAuthenticationProvider());
         }
