@@ -4,6 +4,7 @@ import java.util.Calendar;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Access(AccessType.FIELD)
 public class Account {
     @Id
+    @GeneratedValue
     private Long id;
     private long createDate;
     private String accountNumber;
@@ -24,16 +26,15 @@ public class Account {
     }
 
     @JsonCreator
-    public Account(@JsonProperty("id") final Long id, @JsonProperty("accountName") final String accountName, @JsonProperty("accountNumber") final String accountNumber, @JsonProperty("accountType") final String accountType) {
-        this(id, Calendar.getInstance().getTimeInMillis(), accountName, accountNumber, accountType);
+    public Account(@JsonProperty("accountName") final String accountName, @JsonProperty("accountNumber") final String accountNumber, @JsonProperty("accountType") final String accountType) {
+        this(Calendar.getInstance().getTimeInMillis(), accountName, accountNumber, accountType);
     }
 
-    protected Account(final Long id, final long createDate, final String accountName, final String accountNumber, final String accountType) {
+    protected Account(final long createDate, final String accountName, final String accountNumber, final String accountType) {
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.createDate = createDate;
-        this.id = id;
     }
 
     public String getAccountName() {
