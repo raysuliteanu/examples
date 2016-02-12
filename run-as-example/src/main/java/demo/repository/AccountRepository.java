@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('USER')")
 public interface AccountRepository extends CrudRepository<Account, Long> {
     @RestResource(path = "accountNumber")
     List<Account> findByAccountNumber(final String accountNumber);
