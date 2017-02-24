@@ -61,7 +61,7 @@ command to list the available images...
 
 ```bash
 $ docker images
-REPOSITORY                                           TAG                 IMAGE ID            CREATED             SIZE
+REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
 demo                       latest              bdd5e1080c6e        46 minutes ago      339 MB
 ```
 
@@ -102,7 +102,7 @@ jet_jet_1   java -jar /app.jar   Exit 143
 ```
 ```
 $ docker ps -a
-CONTAINER ID        IMAGE                            COMMAND                  CREATED             STATUS                        PORTS                                            NAMES
+CONTAINER ID        IMAGE  COMMAND                  CREATED             STATUS                        PORTS                                            NAMES
 6207b907874e        demo   "java -jar /app.jar"     44 minutes ago      Exited (143) 33 minutes ago                                                    jet_jet_1
 ```
 
