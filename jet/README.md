@@ -62,7 +62,7 @@ command to list the available images...
 ```bash
 $ docker images
 REPOSITORY                                           TAG                 IMAGE ID            CREATED             SIZE
-nexus-docker.fico.com:445/demo                       latest              bdd5e1080c6e        46 minutes ago      339 MB
+demo                       latest              bdd5e1080c6e        46 minutes ago      339 MB
 ```
 
 The docker-compose command is a way to orchestrate multiple Docker images/containers, and, important in this example,
@@ -103,7 +103,7 @@ jet_jet_1   java -jar /app.jar   Exit 143
 ```
 $ docker ps -a
 CONTAINER ID        IMAGE                            COMMAND                  CREATED             STATUS                        PORTS                                            NAMES
-6207b907874e        nexus-docker.fico.com:445/demo   "java -jar /app.jar"     44 minutes ago      Exited (143) 33 minutes ago                                                    jet_jet_1
+6207b907874e        demo   "java -jar /app.jar"     44 minutes ago      Exited (143) 33 minutes ago                                                    jet_jet_1
 ```
 
 When you run the `docker-compose up` command you could optionally use the "detached" mode so that the container is
