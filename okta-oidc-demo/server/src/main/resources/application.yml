@@ -1,0 +1,21 @@
+
+debug: true
+spring:
+    application:
+        name: demo-resource-server
+        admin:
+            enabled: true
+    artemis:
+        user: admin
+        password: artemis
+    devtools:
+        livereload:
+            enabled: true
+            port: 35729
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    jwk-set-uri: https://dev-913087.okta.com/oauth2/default/v1/keys
+server:
+    port: 8081
