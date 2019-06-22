@@ -1,0 +1,75 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'com.gorylenko.gradle-git-properties' version '1.4.17'
+    id 'com.palantir.docker' version '0.12.0'
+}
+
+gitProperties {
+    gitRepositoryRoot = new File("${project.rootDir}/..")
+}
+
+ext {
+    dockerDir = 'src/docker'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'demo'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.hazelcast:hazelcast:3.8'
+    compile 'com.hazelcast:hazelcast-client:3.8'
+    compile 'com.hazelcast.jet:hazelcast-jet:0.3'
+
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+    compile 'org.springframework.boot:spring-boot-starter-hateoas'
+    compile 'org.springframework.kafka:spring-kafka'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+
+    runtime 'org.springframework.boot:spring-boot-devtools'
+
+    compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+docker {
+    name "${jar.baseName}"
+    tags "${project.version}"
+    dockerfile "${dockerDir}/Dockerfile"
+    files "${project.jar.archivePath}"
+    buildArgs([
+            APPNAME: "${jar.baseName}",
+            APP_VER: "${jar.version}"
+    ])
+
+    dependsOn tasks.jar, tasks.bootRepackage
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+}
