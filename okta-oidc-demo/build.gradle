@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.4.RELEASE'
+        springBootVersion = '2.1.6.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -12,17 +12,18 @@ buildscript {
 
 plugins {
 //    id 'com.bmuschko.docker-remote-api' version '3.2.3'
-    id 'com.bmuschko.docker-spring-boot-application' version '4.6.2'
+    id 'com.bmuschko.docker-spring-boot-application' version '4.10.0' apply false
 }
 
 ext {
-    jupiterVersion = '5.4.1'
+    jupiterVersion = '5.4.2'
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.bmuschko.docker-spring-boot-application'
 
     group = 'com.example'
     version = '0.0.1-SNAPSHOT'
