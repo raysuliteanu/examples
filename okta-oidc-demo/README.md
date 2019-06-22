@@ -33,7 +33,7 @@ $ java -jar server/build/libs/server-0.0.1-SNAPSHOT.jar
 ## Using
 Open a browser and navigate to `localhost:8080`. You should be redirected
 to the Okta login page to authenticate. If authentication is successful,
-you should be redirected to a page with 'Hello, <your user name>'. Now
+you should be redirected to a page with `Hello, <your user name>`. Now
 navigate to `localhost:8080/api` and you should see a result displayed indicating
 you've successfully accessed the protected resource on the resource server.
 
