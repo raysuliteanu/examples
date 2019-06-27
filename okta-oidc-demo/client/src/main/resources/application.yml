@@ -1,25 +1,41 @@
 debug: true
 spring:
-    application:
-        name: demo-client
-        admin:
-            enabled: true
-    artemis:
-        user: admin
-        password: artemis
-    devtools:
-        livereload:
-            enabled: true
-            port: 35730
-    security:
-        oauth2:
-            client:
-                provider:
-                    okta:
-                        issuer-uri: https://dev-913087.okta.com/oauth2/default
-                registration:
-                    okta:
-                        client-id: 0oafqpbaayDdRD1Wm356
-                        client-secret: -h3--BOOoWxZB5WDRtc_gvZ5VpVdfzDht-leKotK
-            resource:
-                server: http://localhost:8081
+  application:
+    name: demo-client
+    admin:
+      enabled: true
+  artemis:
+    user: admin
+    password: artemis
+  devtools:
+    livereload:
+      enabled: true
+      port: 35730
+  security:
+    oauth2:
+      client:
+        provider:
+          okta:
+            issuer-uri: https://dev-913087.okta.com/oauth2/default
+        registration:
+          okta:
+            client-id: 0oafqpbaayDdRD1Wm356
+            client-secret: -h3--BOOoWxZB5WDRtc_gvZ5VpVdfzDht-leKotK
+      resource:
+        server: http://localhost:8081
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: when_authorized
+      roles: ADMIN
+
+server:
+  servlet:
+    session:
+      timeout: 5m

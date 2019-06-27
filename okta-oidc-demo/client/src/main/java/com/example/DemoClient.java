@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
@@ -36,7 +38,7 @@ public class DemoClient {
 
     @GetMapping("/")
     String home(@AuthenticationPrincipal OidcUser user) {
-        return "Hello " + user.getFullName();
+        return "Hello " + user.getGivenName();
     }
 
     @GetMapping("/api")
@@ -62,6 +64,24 @@ public class DemoClient {
             return WebClient.builder()
                     .apply(oauth2.oauth2Configuration())
                     .build();
+        }
+    }
+
+    @Configuration
+    public static class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(final HttpSecurity http) throws Exception {
+            // @formatter:off
+            http
+                    .authorizeRequests()
+                        .antMatchers("/**").authenticated()
+                        .and()
+                    .sessionManagement()
+                        .disable()
+                    .httpBasic()
+                        .disable()
+                    .oauth2Login();
+            // @formatter:on
         }
     }
 }
