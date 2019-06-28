@@ -13,6 +13,9 @@ spring:
       port: 35730
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://dev-913087.okta.com/oauth2/default/v1/keys
       client:
         provider:
           okta:
@@ -21,8 +24,9 @@ spring:
           okta:
             client-id: 0oafqpbaayDdRD1Wm356
             client-secret: -h3--BOOoWxZB5WDRtc_gvZ5VpVdfzDht-leKotK
-      resource:
-        server: http://localhost:8081
+
+example:
+  server: http://localhost:8081
 
 management:
   endpoints:

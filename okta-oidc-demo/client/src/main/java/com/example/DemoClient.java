@@ -23,8 +23,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class DemoClient {
     private static final Logger LOG = LoggerFactory.getLogger(DemoClient.class);
 
-    @Value("#{ @environment['spring.security.oauth2.resource.server'] }")
-    private String resourceServerUrl;
+    @Value("#{ @environment['example.server'] }")
+    private String remoteResourceServer;
 
     private WebClient webClient;
 
@@ -38,15 +38,15 @@ public class DemoClient {
 
     @GetMapping("/")
     String home(@AuthenticationPrincipal OidcUser user) {
-        return "Hello " + user.getGivenName();
+        return "Hello " + user.getGivenName() + " from tenant " + user.getClaimAsString("tenantId");
     }
 
     @GetMapping("/api")
     String api() {
-        LOG.debug("resource server url: {}", resourceServerUrl);
+        LOG.debug("resource server url: {}", remoteResourceServer);
         return this.webClient
                 .get()
-                .uri(resourceServerUrl + "/api")
+                .uri(remoteResourceServer + "/api")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
