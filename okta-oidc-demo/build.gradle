@@ -69,6 +69,12 @@ subprojects {
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
     }
 
+    // cleanup random things that might get generated; 'out' is from IntelliJ; the DMP stuff might result if running tests
+    clean {
+        delete "${projectDir}/out"
+        delete "${projectDir}/.clover"
+    }
+
     test {
         useJUnitPlatform()
         reports {
