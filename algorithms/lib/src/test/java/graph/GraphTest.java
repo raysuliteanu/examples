@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
+import static graph.GraphUtils.bfs;
+import static graph.GraphUtils.isValidBST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GraphTest {
     @Test
-    void bfs() {
+    void validBfs() {
         BinaryNode<Integer> root = new BinaryNode<>(1);
         BinaryNode<Integer> left = new BinaryNode<>(2);
         BinaryNode<Integer> right = new BinaryNode<>(3);
@@ -38,11 +42,39 @@ public class GraphTest {
         List<BinaryNode<Integer>> nodes = new ArrayList<>();
         nodes.add(node);
 
-        List<String> values = GraphUtils.bfs(nodes).stream()
+        List<String> values = bfs(nodes).stream()
                                         .map(aNode -> String.valueOf(aNode.getValue()))
                                         .collect(Collectors.toList());
 
         return String.join(" ", values);
     }
 
+    @Test
+    void invalidBst1() {
+        BinaryNode<Integer> root = new BinaryNode<>(Integer.MIN_VALUE);
+        BinaryNode<Integer> left = new BinaryNode<>(Integer.MIN_VALUE);
+        root.setLeft(left);
+
+        assertFalse(isValidBST(root));
+    }
+
+    @Test
+    void invalidBst2() {
+        BinaryNode<Integer> root = new BinaryNode<>(Integer.MAX_VALUE);
+        BinaryNode<Integer> right = new BinaryNode<>(Integer.MIN_VALUE);
+        root.setRight(right);
+
+        assertFalse(isValidBST(root));
+    }
+
+    @Test
+    void validBst() {
+        BinaryNode<Integer> root = new BinaryNode<>(2);
+        BinaryNode<Integer> left = new BinaryNode<>(1);
+        BinaryNode<Integer> right = new BinaryNode<>(3);
+        root.setLeft(left);
+        root.setRight(right);
+
+        assertTrue(isValidBST(root));
+    }
 }
