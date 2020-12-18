@@ -1,5 +1,7 @@
 package sort;
 
+import static java.lang.System.arraycopy;
+
 public abstract class SortUtils {
     public static void mergeSort(int[] array, int size) {
         if (size < 2) { return; }
@@ -8,9 +10,7 @@ public abstract class SortUtils {
         int[] left = new int[mid];
         int[] right = new int[array.length - mid];
 
-        for (int i = 0; i < left.length; i++) {
-            left[i] = array[i];
-        }
+        arraycopy(array, 0, left, 0, left.length);
 
         for (int i = 0, j = mid; j < array.length; i++, j++) {
             right[i] = array[j];
