@@ -34,4 +34,9 @@ public class BinaryNode<T> {
     public void setRight(final BinaryNode<T> right) {
         this.right = right;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }
