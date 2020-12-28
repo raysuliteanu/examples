@@ -34,19 +34,19 @@ public abstract class GraphUtils {
     static boolean isValidBST(BinaryNode<Integer> root, Integer min, Integer max) {
         if (root == null) { return true; }
 
-        Integer rootValue = root.getValue();
+        Integer rootValue = root.value();
 
         if (rootValue < min || rootValue > max) { return false; }
 
         BinaryNode<Integer> left = root.getLeft();
 
         // if current node is already at the lowest value, there must not be any child to the left (i.e. with smaller value)
-        if (root.getValue() == MIN_VALUE && left != null) { return false; }
+        if (root.value() == MIN_VALUE && left != null) { return false; }
 
         BinaryNode<Integer> right = root.getRight();
 
         // similarly, if current node is at the max value, there must not be any child to the right (i.e. with a larger value)
-        if (root.getValue() == MAX_VALUE && right != null) { return false; }
+        if (root.value() == MAX_VALUE && right != null) { return false; }
 
         return isValidBST(left, min, rootValue - 1) &&
                 isValidBST(right, rootValue + 1, max);

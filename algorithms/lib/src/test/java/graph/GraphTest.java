@@ -43,7 +43,7 @@ public class GraphTest {
         nodes.add(node);
 
         List<String> values = bfs(nodes).stream()
-                                        .map(aNode -> String.valueOf(aNode.getValue()))
+                                        .map(aNode -> String.valueOf(aNode.value()))
                                         .collect(Collectors.toList());
 
         return String.join(" ", values);
