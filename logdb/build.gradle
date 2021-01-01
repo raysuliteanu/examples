@@ -5,6 +5,12 @@ plugins {
 group 'org.kidoni'
 version '0.0.1-SNAPSHOT'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(15)
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -15,7 +21,7 @@ dependencies {
 }
 
 tasks.withType(JavaCompile).all {
-    options.compilerArgs += ['--enable-preview']
+    options.compilerArgs += ['--enable-preview', '-source', '15']
 }
 
 tasks.withType(Test).all {

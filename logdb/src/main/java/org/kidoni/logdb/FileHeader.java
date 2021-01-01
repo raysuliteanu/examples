@@ -7,4 +7,8 @@ record FileHeader(String type, String version) {
     public static FileHeader createHeader() {
         return new FileHeader(TYPE, VERSION);
     }
+
+    public int headerSize() {
+        return TYPE.length() + VERSION.length();
+    }
 }
