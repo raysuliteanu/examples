@@ -1,0 +1,9 @@
+rootProject.name = 'examples'
+
+include 'algorithms'
+include 'logdb'
+include 'okta-oidc-demo'
+//include 'run-as-example'
+include 'spring-mvc-to-webflux'
+include 'grpc'
+

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package greeting;
+
+option java_package = "org.kidoni.examples.grpc";
+option java_outer_classname = "Greeting";
+
+message GreetingRequest {
+  string name = 1;
+}
+
+message GreetingResponse {
+  string response = 1;
+}
+
+service GreetingService {
+  rpc Greet(GreetingRequest) returns (GreetingResponse) {}
+}
