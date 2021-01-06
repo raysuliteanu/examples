@@ -2,7 +2,11 @@ plugins {
     id 'java'
 }
 
-sourceCompatibility = 14
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(14)
+    }
+}
 
 repositories {
     mavenCentral()
