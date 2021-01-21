@@ -1,5 +1,8 @@
 package sort;
 
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
+
 import static java.lang.System.arraycopy;
 
 public abstract class SortUtils {
@@ -21,6 +24,16 @@ public abstract class SortUtils {
         merge(array, left, right);
     }
 
+    public static void forkJoinMergesort(int[] array, int size) {
+        if (size < 1000) {
+            mergeSort(array, size);
+        }
+        else {
+            ForkJoinPool.commonPool().invoke(new ForkJoinMerge(array, size));
+        }
+
+    }
+
     private static void merge(final int[] dest, final int[] left, final int[] right) {
         int destIdx = 0, leftIdx = 0, rightIdx = 0;
         while (leftIdx < left.length && rightIdx < right.length) {
@@ -38,6 +51,45 @@ public abstract class SortUtils {
 
         for (int i = rightIdx; i < right.length; i++) {
             dest[destIdx++] = right[i];
+        }
+    }
+
+    private static class ForkJoinMerge extends RecursiveAction {
+
+        private final int[] array;
+        private final int size;
+
+        public ForkJoinMerge(final int[] array, final int size) {
+            this.array = array;
+            this.size = size;
+        }
+
+        @Override
+        protected void compute() {
+            if (size < 2) {
+                return;
+            }
+
+            int mid = size / 2;
+            int[] left = new int[mid];
+            int[] right = new int[array.length - mid];
+
+            arraycopy(array, 0, left, 0, left.length);
+
+            for (int i = 0, j = mid; j < array.length; i++, j++) {
+                right[i] = array[j];
+            }
+
+            var leftFork = new ForkJoinMerge(left, left.length);
+            var rightFork = new ForkJoinMerge(right, right.length);
+
+            leftFork.fork();
+            rightFork.fork();
+
+            leftFork.join();
+            rightFork.join();
+
+            merge(array, left, right);
         }
     }
 }
