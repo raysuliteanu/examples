@@ -7,21 +7,19 @@ import static java.lang.System.arraycopy;
 
 public abstract class SortUtils {
     public static void mergeSort(int[] array, int size) {
-        if (size < 2) { return; }
+        if (size > 1) {
+            int mid = size / 2;
+            int[] left = new int[mid];
+            int[] right = new int[array.length - mid];
 
-        int mid = size / 2;
-        int[] left = new int[mid];
-        int[] right = new int[array.length - mid];
+            arraycopy(array, 0, left, 0, left.length);
+            arraycopy(array, mid, right, 0, array.length - mid);
 
-        arraycopy(array, 0, left, 0, left.length);
+            mergeSort(left, left.length);
+            mergeSort(right, right.length);
 
-        for (int i = 0, j = mid; j < array.length; i++, j++) {
-            right[i] = array[j];
+            merge(array, left, right);
         }
-
-        mergeSort(left, left.length);
-        mergeSort(right, right.length);
-        merge(array, left, right);
     }
 
     public static void forkJoinMergesort(int[] array, int size) {
@@ -66,30 +64,25 @@ public abstract class SortUtils {
 
         @Override
         protected void compute() {
-            if (size < 2) {
-                return;
+            if (size > 1) {
+                int mid = size / 2;
+                int[] left = new int[mid];
+                int[] right = new int[array.length - mid];
+
+                arraycopy(array, 0, left, 0, left.length);
+                arraycopy(array, mid, right, 0, array.length - mid);
+
+                var leftFork = new ForkJoinMerge(left, left.length);
+                var rightFork = new ForkJoinMerge(right, right.length);
+
+                leftFork.fork();
+                rightFork.fork();
+
+                leftFork.join();
+                rightFork.join();
+
+                merge(array, left, right);
             }
-
-            int mid = size / 2;
-            int[] left = new int[mid];
-            int[] right = new int[array.length - mid];
-
-            arraycopy(array, 0, left, 0, left.length);
-
-            for (int i = 0, j = mid; j < array.length; i++, j++) {
-                right[i] = array[j];
-            }
-
-            var leftFork = new ForkJoinMerge(left, left.length);
-            var rightFork = new ForkJoinMerge(right, right.length);
-
-            leftFork.fork();
-            rightFork.fork();
-
-            leftFork.join();
-            rightFork.join();
-
-            merge(array, left, right);
         }
     }
 }

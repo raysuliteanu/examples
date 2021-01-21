@@ -4,6 +4,9 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
+import static java.lang.System.arraycopy;
+import static java.lang.System.currentTimeMillis;
+import static java.lang.System.out;
 import static java.util.Arrays.parallelSort;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static sort.SortUtils.forkJoinMergesort;
@@ -48,7 +51,7 @@ public class SortUtilsTest {
         int[] original = generateInts(size);
 
         int[] toBeSorted = new int[size];
-        System.arraycopy(original, 0, toBeSorted, 0, size);
+        arraycopy(original, 0, toBeSorted, 0, size);
 
         forkJoinMergesort(toBeSorted, size);
         parallelSort(original); // uses optimized quicksort
@@ -58,27 +61,33 @@ public class SortUtilsTest {
 
     @Test
     public void forkJoinMergeWithTiming() {
-        int size = 2_000_000;
-        int[] original = generateInts(size);
-
+        int size = 10_000_000;
+        int[] toBeSorted = new int[size];
         int[] toBeSortedFJ = new int[size];
-        System.arraycopy(original, 0, toBeSortedFJ, 0, size);
+        for (int i = 0; i < 10; i++) {
+            int[] original = generateInts(size);
+            arraycopy(original, 0, toBeSorted, 0, size);
+            arraycopy(original, 0, toBeSortedFJ, 0, size);
 
-        long start = System.currentTimeMillis();
-        forkJoinMergesort(toBeSortedFJ, size);
-        long elapsed = System.currentTimeMillis() - start;
-        System.out.println("forkJoinMerge: " + elapsed + "ms");
+            long start = currentTimeMillis();
+            mergeSort(toBeSorted, size);
+            long elapsed = currentTimeMillis() - start;
+            out.print("mergesort: " + elapsed + "ms\t");
 
-        start = System.currentTimeMillis();
-        parallelSort(original);
-        elapsed = System.currentTimeMillis() - start;
-        System.out.println("Arrays.parallelSort(): " + elapsed + "ms");
+            start = currentTimeMillis();
+            forkJoinMergesort(toBeSortedFJ, size);
+            elapsed = currentTimeMillis() - start;
+            out.print("forkJoinMerge: " + elapsed + "ms\t");
 
-        assertArrayEquals(original, toBeSortedFJ);
+            start = currentTimeMillis();
+            parallelSort(original);
+            elapsed = currentTimeMillis() - start;
+            out.println("Arrays.parallelSort(): " + elapsed + "ms");
+        }
     }
 
     private int[] generateInts(final int size) {
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random(currentTimeMillis());
         int[] original = new int[size];
         for (int i = 0; i < size; i++) {
             original[i] = random.nextInt();
