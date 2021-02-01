@@ -1,16 +1,27 @@
 package graph;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 class LinkedListAdjacencyList implements AdjacencyList {
-    private final Map<Integer, List<Vertex<?>>> adjacencyList = new HashMap<>();
+    private final Map<Vertex<?>, List<Vertex<?>>> adjacencyList = new HashMap<>();
+    private final boolean isDirected;
     private int edgeCount;
+
+    public LinkedListAdjacencyList() {
+        this(false);
+    }
+
+    LinkedListAdjacencyList(final boolean isDirected) {
+        this.isDirected = isDirected;
+    }
 
     @Override
     public void addEdge(Edge edge) {
@@ -18,11 +29,11 @@ class LinkedListAdjacencyList implements AdjacencyList {
         Vertex<?> w = edge.vertices()[1];
 
         synchronized (adjacencyList) {
-            if (!adjacencyList.containsKey(v.number())) {
-                adjacencyList.put(v.number(), new LinkedList<>());
+            if (!adjacencyList.containsKey(v)) {
+                adjacencyList.put(v, new LinkedList<>());
             }
 
-            List<Vertex<?>> adjacentToV = adjacencyList.get(v.number());
+            List<Vertex<?>> adjacentToV = adjacencyList.get(v);
             if (adjacentToV.contains(w)) {
                 // already exists
                 return;
@@ -30,12 +41,14 @@ class LinkedListAdjacencyList implements AdjacencyList {
 
             adjacentToV.add(w);
 
-            if (!adjacencyList.containsKey(w.number())) {
-                adjacencyList.put(w.number(), new LinkedList<>());
-            }
+            if (!isDirected) {
+                if (!adjacencyList.containsKey(w)) {
+                    adjacencyList.put(w, new LinkedList<>());
+                }
 
-            List<Vertex<?>> adjacentToW = adjacencyList.get(w.number());
-            adjacentToW.add(v);
+                List<Vertex<?>> adjacentToW = adjacencyList.get(w);
+                adjacentToW.add(v);
+            }
 
             ++edgeCount;
         }
@@ -50,12 +63,14 @@ class LinkedListAdjacencyList implements AdjacencyList {
 
     @Override
     public int countEdges() {
-        return edgeCount;
+        synchronized (adjacencyList) {
+            return edgeCount;
+        }
     }
 
     @Override
     public Optional<List<Vertex<?>>> forVertex(final Vertex<?> v) {
-        return Optional.ofNullable(adjacencyList.get(v.number()));
+        return Optional.ofNullable(adjacencyList.get(v));
     }
 
     @Override
@@ -64,14 +79,16 @@ class LinkedListAdjacencyList implements AdjacencyList {
         Vertex<?> w = edge.vertices()[1];
 
         synchronized (adjacencyList) {
-            List<Vertex<?>> vertices = adjacencyList.get(v.number());
+            List<Vertex<?>> vertices = adjacencyList.get(v);
             if (vertices != null) {
                 vertices.removeIf(vertex -> vertex.number() == w.number());
             }
 
-            vertices = adjacencyList.get(w.number());
-            if (vertices != null) {
-                vertices.removeIf(vertex -> vertex.number() == v.number());
+            if (!isDirected) {
+                vertices = adjacencyList.get(w);
+                if (vertices != null) {
+                    vertices.removeIf(vertex -> vertex.number() == v.number());
+                }
             }
 
             --edgeCount;
@@ -79,7 +96,11 @@ class LinkedListAdjacencyList implements AdjacencyList {
     }
 
     @Override
-    public Set<Integer> vertices() {
-        return Collections.unmodifiableSet(adjacencyList.keySet());
+    public Set<Vertex<?>> vertices() {
+        synchronized (adjacencyList) {
+            final TreeSet<Vertex<?>> vertices = new TreeSet<>(Comparator.comparingInt(Vertex::number));
+            vertices.addAll(adjacencyList.keySet());
+            return Collections.unmodifiableSet(vertices);
+        }
     }
 }

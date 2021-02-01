@@ -3,6 +3,7 @@ package graph;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.Test;
 
 import static graph.GraphUtils.bfs;
@@ -14,6 +15,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class GraphTest {
     @Test
     void validBfs() {
+        String result = generateBfs(binaryTree());
+        assertEquals("1 2 3 4 5 6 7", result);
+    }
+
+    @Test
+    void validGeneralBfs() {
+        final Vertex<?> root = new SimpleVertex(1, "1");
+        final Vertex<?> two = new SimpleVertex(2, "2");
+        final Vertex<?> three = new SimpleVertex(3, "3");
+
+        final Graph graph = GraphBuilder.defaultGraph()
+                .withEdge(Edge.of(root, two))
+                .withEdge(Edge.of(root, three))
+                .withEdge(Edge.of(two, new SimpleVertex(4, "4")))
+                .withEdge(Edge.of(two, new SimpleVertex(5, "5")))
+                .withEdge(Edge.of(three, new SimpleVertex(6, "6")))
+                .withEdge(Edge.of(three, new SimpleVertex(7, "7")))
+                .build();
+        List<Vertex<?>> output = GraphUtils.bfs(graph, root);
+        for (int i = 1; i <= output.size(); i++) {
+            assertEquals(i, output.get(i - 1).number());
+        }
+    }
+
+    private BinaryNode<Integer> binaryTree() {
         BinaryNode<Integer> root = new BinaryNode<>(1);
         BinaryNode<Integer> left = new BinaryNode<>(2);
         BinaryNode<Integer> right = new BinaryNode<>(3);
@@ -29,9 +55,7 @@ public class GraphTest {
         BinaryNode<Integer> rightRight = new BinaryNode<>(7);
         right.setLeft(rightLeft);
         right.setRight(rightRight);
-
-        String result = generateBfs(root);
-        assertEquals("1 2 3 4 5 6 7", result);
+        return root;
     }
 
     private String generateBfs(final BinaryNode<Integer> node) {

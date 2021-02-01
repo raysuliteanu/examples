@@ -1,8 +1,11 @@
 package graph;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -51,6 +54,11 @@ public class DefaultGraph implements Graph {
     }
 
     @Override
+    public Optional<Vertex<?>> vertex(final int number) {
+        return adjacencyList.vertices().stream().filter(v -> v.number() == number).findFirst();
+    }
+
+    @Override
     public Iterator<Vertex<?>> adjacencyList(final Vertex<?> v) {
         return new AdjacencyListIterator(adjacencyList.forVertex(v).orElseGet(Collections::emptyList));
     }
@@ -59,14 +67,15 @@ public class DefaultGraph implements Graph {
     public String toString() {
         StringBuilder builder = new StringBuilder("Graph").append(" ").append(name).append("\n");
 
-        Set<Integer> vertices = adjacencyList.vertices();
-        for (Integer vertex : vertices) {
+        Set<Vertex<?>> vertices = adjacencyList.vertices();
+        for (Vertex<?> vertex : vertices) {
             builder.append(vertex).append(": ");
-            Iterator<Vertex<?>> iterator = adjacencyList(new SimpleVertex(vertex, null));
+            List<Integer> ids = new ArrayList<>();
+            Iterator<Vertex<?>> iterator = adjacencyList(vertex);
             while (iterator.hasNext()) {
-                builder.append(iterator.next().number()).append(" ");
+                ids.add(iterator.next().number());
             }
-            builder.append("\n");
+            builder.append(Arrays.toString(ids.stream().sorted().toArray())).append("\n");
         }
 
         return builder.toString();

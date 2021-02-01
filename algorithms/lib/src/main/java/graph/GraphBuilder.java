@@ -2,7 +2,7 @@ package graph;
 
 public class GraphBuilder {
 
-    private Graph graph;
+    private final Graph graph;
 
     public GraphBuilder(final Graph graph) {
         this.graph = graph;

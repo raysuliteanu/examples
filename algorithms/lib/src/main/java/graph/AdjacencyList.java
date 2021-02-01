@@ -15,5 +15,5 @@ public interface AdjacencyList {
 
     void removeEdge(Edge edge);
 
-    Set<Integer> vertices();
+    Set<Vertex<?>> vertices();
 }

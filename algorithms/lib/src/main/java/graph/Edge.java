@@ -26,6 +26,10 @@ public class Edge {
         this.attributes.addAll(Arrays.asList(attributes.clone()));
     }
 
+    public static Edge of(final Vertex<?> v1, final Vertex<?> v2) {
+        return new Edge(v1, v2);
+    }
+
     public Vertex<?>[] vertices() {
         return vertices;
     }

@@ -5,7 +5,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractVertex<T> implements Vertex<T> {
     private static final AtomicInteger counter = new AtomicInteger(1);
-    private final int number = counter.getAndIncrement();
+    private final int number;
+
+    public AbstractVertex() {
+        number = counter.getAndIncrement();
+    }
+
+    public AbstractVertex(final Integer number) {
+        this.number = number;
+    }
 
     @Override
     public int number() {
@@ -14,8 +22,12 @@ public abstract class AbstractVertex<T> implements Vertex<T> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         final AbstractVertex<?> that = (AbstractVertex<?>) o;
         return number == that.number;
     }

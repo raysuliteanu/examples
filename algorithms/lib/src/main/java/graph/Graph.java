@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 public interface Graph {
     default boolean isDirected() { return false;}
@@ -14,6 +15,8 @@ public interface Graph {
     void remove(Edge edge);
 
     boolean edge(Vertex<?> v, Vertex<?> w);
+
+    Optional<Vertex<?>> vertex(int number);
 
     Iterator<Vertex<?>> adjacencyList(Vertex<?> v);
 }

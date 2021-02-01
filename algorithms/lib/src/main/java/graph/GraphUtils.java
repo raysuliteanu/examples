@@ -1,12 +1,40 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 
 public abstract class GraphUtils {
+    public static List<Vertex<?>> bfs(final Graph graph, final Vertex<?> start) {
+        final List<Vertex<?>> output = new LinkedList<>();
+        final Queue<Vertex<?>> toVisit = new LinkedList<>();
+        final BitSet visited = new BitSet();
+        toVisit.add(start);
+
+        while (!toVisit.isEmpty()) {
+            Vertex<?> current = toVisit.remove();
+
+            visited.set(current.number());
+            output.add(current);
+
+            final Iterator<Vertex<?>> adjacencyList = graph.adjacencyList(current);
+            while (adjacencyList.hasNext()) {
+                final Vertex<?> next = adjacencyList.next();
+                if (!visited.get(next.number())) {
+                    toVisit.add(next);
+                }
+            }
+        }
+
+        return output;
+    }
+
     public static List<BinaryNode<Integer>> bfs(List<BinaryNode<Integer>> input) {
         List<BinaryNode<Integer>> nodes = new ArrayList<>();
         for (BinaryNode<Integer> node : input) {
