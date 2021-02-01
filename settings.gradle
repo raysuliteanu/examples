@@ -1,6 +1,6 @@
 rootProject.name = 'examples'
 
-include 'algorithms'
+//include 'algorithms'
 include 'logdb'
 include 'okta-oidc-demo'
 //include 'run-as-example'
