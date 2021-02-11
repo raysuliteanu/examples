@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class DefaultGraphTest {
     @Test
     void addEdges() {
-        Vertex<String> first = new SimpleVertex(10, null);
-        Vertex<String> second = new SimpleVertex(20, null);
-        Vertex<String> third = new SimpleVertex(30, null);
+        Vertex<String> first = new SimpleVertex(10);
+        Vertex<String> second = new SimpleVertex(20);
+        Vertex<String> third = new SimpleVertex(30);
 
         DefaultGraph graph = new DefaultGraph();
         graph.insert(new Edge(first, second));

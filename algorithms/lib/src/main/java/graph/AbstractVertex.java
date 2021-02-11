@@ -1,17 +1,11 @@
 package graph;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractVertex<T> implements Vertex<T> {
-    private static final AtomicInteger counter = new AtomicInteger(1);
     private final int number;
 
-    public AbstractVertex() {
-        number = counter.getAndIncrement();
-    }
-
-    public AbstractVertex(final Integer number) {
+    public AbstractVertex(final int number) {
         this.number = number;
     }
 
@@ -35,5 +29,10 @@ public abstract class AbstractVertex<T> implements Vertex<T> {
     @Override
     public int hashCode() {
         return Objects.hash(number);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(number());
     }
 }

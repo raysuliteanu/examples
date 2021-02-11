@@ -2,6 +2,7 @@ package graph;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,7 +12,7 @@ class LinkedListAdjacencyListTest {
     @Test
     void addEdge() {
         LinkedListAdjacencyList adjacencyList = new LinkedListAdjacencyList();
-        adjacencyList.addEdge(new Edge(new BinaryNode<>(10), new BinaryNode<>(20)));
+        adjacencyList.addEdge(new Edge(new BinaryVertex<>(10), new BinaryVertex<>(20)));
         assertEquals(2, adjacencyList.countVertices());
         assertEquals(1, adjacencyList.countEdges());
     }
@@ -19,8 +20,8 @@ class LinkedListAdjacencyListTest {
     @Test
     void uniqueEdges() {
         LinkedListAdjacencyList adjacencyList = new LinkedListAdjacencyList();
-        BinaryNode<Integer> first = new BinaryNode<>(10);
-        BinaryNode<Integer> second = new BinaryNode<>(20);
+        BinaryVertex<Integer> first = new BinaryVertex<>(10);
+        BinaryVertex<Integer> second = new BinaryVertex<>(20);
         adjacencyList.addEdge(new Edge(first, second));
         assertEquals(2, adjacencyList.countVertices());
         assertEquals(1, adjacencyList.countEdges());
@@ -33,12 +34,12 @@ class LinkedListAdjacencyListTest {
     @Test
     void findAdjacencyList() {
         LinkedListAdjacencyList adjacencyList = new LinkedListAdjacencyList();
-        BinaryNode<Integer> first = new BinaryNode<>(10);
-        adjacencyList.addEdge(new Edge(first, new BinaryNode<>(20)));
-        adjacencyList.addEdge(new Edge(first, new BinaryNode<>(30)));
-        adjacencyList.addEdge(new Edge(first, new BinaryNode<>(40)));
-        adjacencyList.addEdge(new Edge(first, new BinaryNode<>(50)));
-        adjacencyList.addEdge(new Edge(first, new BinaryNode<>(60)));
+        BinaryVertex<Integer> first = new BinaryVertex<>(10);
+        adjacencyList.addEdge(new Edge(first, new BinaryVertex<>(20)));
+        adjacencyList.addEdge(new Edge(first, new BinaryVertex<>(30)));
+        adjacencyList.addEdge(new Edge(first, new BinaryVertex<>(40)));
+        adjacencyList.addEdge(new Edge(first, new BinaryVertex<>(50)));
+        adjacencyList.addEdge(new Edge(first, new BinaryVertex<>(60)));
 
         Optional<List<Vertex<?>>> vertices = adjacencyList.forVertex(first);
         assertTrue(vertices.isPresent());
@@ -55,12 +56,12 @@ class LinkedListAdjacencyListTest {
     @Test
     void removeEdge() {
         // six vertices ...
-        BinaryNode<Integer> first = new BinaryNode<>(10);
-        BinaryNode<Integer> second = new BinaryNode<>(20);
-        BinaryNode<Integer> third = new BinaryNode<>(30);
-        BinaryNode<Integer> fourth = new BinaryNode<>(40);
-        BinaryNode<Integer> fifth = new BinaryNode<>(50);
-        BinaryNode<Integer> sixth = new BinaryNode<>(60);
+        BinaryVertex<Integer> first = new BinaryVertex<>(10);
+        BinaryVertex<Integer> second = new BinaryVertex<>(20);
+        BinaryVertex<Integer> third = new BinaryVertex<>(30);
+        BinaryVertex<Integer> fourth = new BinaryVertex<>(40);
+        BinaryVertex<Integer> fifth = new BinaryVertex<>(50);
+        BinaryVertex<Integer> sixth = new BinaryVertex<>(60);
         final int numberVertices = 6;
 
         // and five edges ...

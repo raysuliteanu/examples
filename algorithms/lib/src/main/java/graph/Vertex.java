@@ -1,7 +1,9 @@
 package graph;
 
+import java.util.List;
+
 public interface Vertex<T> {
     int number();
 
-    T value();
+    List<Vertex<?>> children();
 }
