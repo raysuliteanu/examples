@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LinkedListAdjacencyListTest {
@@ -13,6 +14,7 @@ class LinkedListAdjacencyListTest {
     void addEdge() {
         LinkedListAdjacencyList adjacencyList = new LinkedListAdjacencyList();
         adjacencyList.addEdge(new Edge(new BinaryVertex<>(10), new BinaryVertex<>(20)));
+        assertEquals(2, adjacencyList.countVertices());
         assertEquals(1, adjacencyList.countEdges());
     }
 
@@ -22,9 +24,11 @@ class LinkedListAdjacencyListTest {
         BinaryVertex<Integer> first = new BinaryVertex<>(10);
         BinaryVertex<Integer> second = new BinaryVertex<>(20);
         adjacencyList.addEdge(new Edge(first, second));
+        assertEquals(2, adjacencyList.countVertices());
         assertEquals(1, adjacencyList.countEdges());
 
         adjacencyList.addEdge(new Edge(first, second));
+        assertEquals(2, adjacencyList.countVertices());
         assertEquals(1, adjacencyList.countEdges());
     }
 
@@ -83,15 +87,20 @@ class LinkedListAdjacencyListTest {
 
         final int numberAdjacentToFirstVertex = numberVertices - 1;
         assertEquals(numberAdjacentToFirstVertex, adjacencyListForVertex.size());
+        assertEquals(numberVertices, adjacencyList.countVertices());
         assertEquals(numberEdges, adjacencyList.countEdges());
 
         adjacencyList.removeEdge(four);
+
+        edges = adjacencyList.forVertex(fifth);
+        assertFalse(edges.isPresent());
 
         edges = adjacencyList.forVertex(first);
         assertTrue(edges.isPresent());
         adjacencyListForVertex = edges.get();
         // first vertex has 4 adjacent edges after removing one
         assertEquals(numberEdges - 1, adjacencyListForVertex.size());
+        assertEquals(5, adjacencyList.countVertices());
         assertEquals(4, adjacencyList.countEdges());
     }
 }
