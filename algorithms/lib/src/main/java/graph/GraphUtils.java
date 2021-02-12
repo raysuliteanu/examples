@@ -1,19 +1,78 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import adt.MultiwayHeapPriorityQueue;
+
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 
 public abstract class GraphUtils {
-    public static List<Vertex<?>> dijkstra(final Graph graph, final MutableValueVertex<Integer> start, final MutableValueVertex<Integer> end) {
-        return Collections.emptyList();
+    public static final String WEIGHT = "weight";
+
+    public static Pair<Edge[], Double[]> dijkstra(final Graph graph, final Vertex<?> startVertex) {
+        int size = graph.countVertices();
+        Double[] weights = new Double[size];
+        Edge[] spanningTree = new Edge[size];
+        Arrays.fill(weights, Double.MAX_VALUE);
+
+        final MultiwayHeapPriorityQueue priorityQueue = new MultiwayHeapPriorityQueue(size, weights);
+
+        for (int v = 0; v < size; v++) {
+            priorityQueue.insert(v);
+        }
+
+        final int start = startVertex.number();
+
+        weights[start] = 0.0d;
+        priorityQueue.lower(start);
+
+        while (!priorityQueue.empty()) {
+            int v = priorityQueue.getMin();
+            if (v != start && spanningTree[v] == null) {
+                break;
+            }
+
+            final Iterator<Edge> adjacencyList = graph.adjacencyList(graph.vertex(v).get());
+            while (adjacencyList.hasNext()) {
+                Edge edge = adjacencyList.next();
+                int w = edge.vertices()[1].number();
+                final Double weight = (Double) edge.getAttributeValue(WEIGHT).get();
+                double priority = weights[v] + weight;
+                if (priority < weights[w]) {
+                    weights[w] = priority;
+                    priorityQueue.lower(w);
+                    spanningTree[w] = edge;
+                }
+            }
+        }
+
+        return Pair.of(spanningTree, weights);
+    }
+
+    public static class Pair<P1, P2> {
+        P1 one;
+        P2 two;
+
+        public Pair(final P1 one, final P2 two) {
+            this.one = one;
+            this.two = two;
+        }
+
+        public static <P1, P2> Pair<P1, P2> of(P1 one, P2 two) {
+            return new Pair<>(one, two);
+        }
+
+        @Override
+        public String toString() {
+            return "Pair:\n" + one + "\n" + two;
+        }
     }
 
     public static List<Vertex<?>> depthFirstTraversal(final Graph graph, final Vertex<?> start) {

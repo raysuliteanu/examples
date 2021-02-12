@@ -30,6 +30,19 @@ public class Edge {
         return new Edge(v1, v2);
     }
 
+    public Edge with(Attribute<?> attribute) {
+        addAttribute(attribute);
+        return this;
+    }
+
+    public Edge with(Attribute<?>... attributes) {
+        for (Attribute<?> attribute : attributes) {
+            addAttribute(attribute);
+        }
+
+        return this;
+    }
+
     public Vertex<?>[] vertices() {
         return vertices;
     }
@@ -40,6 +53,31 @@ public class Edge {
 
     public Optional<Attribute<?>> getAttribute(final String attributeName) {
         return attributes.stream().filter(value -> attributeName.equals(value.name())).findFirst();
+    }
+
+    public <T> Optional<T> getAttributeValue(final String attributeName) {
+        final Optional<Attribute<?>> attribute = attributes.stream()
+                .filter(value -> attributeName.equals(value.name()))
+                .findFirst();
+
+        if (attribute.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return (Optional<T>) Optional.of(attribute.get().value());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder(vertices[0] + "->" + vertices[1]);
+        if (!attributes.isEmpty()) {
+            result.append(" (");
+            for (Attribute<?> attribute : attributes) {
+                result.append("[").append(attribute.name()).append("=").append(attribute.value()).append("]");
+            }
+            result.append(")");
+        }
+        return result.toString();
     }
 
     @Override

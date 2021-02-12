@@ -27,6 +27,11 @@ public class DefaultGraph implements Graph {
     }
 
     @Override
+    public int countVertices() {
+        return adjacencyList.countVertices();
+    }
+
+    @Override
     public void insert(final Edge edge) {
         adjacencyList.addEdge(edge);
     }

@@ -5,15 +5,15 @@ public class MultiwayHeapPriorityQueue {
     public static final int DEFAULT_HEAP_NUM_WAYS = 3;
     private int size = 0;
     private final int ways;
-    private final double[] weights;
+    private final Double[] weights;
     private final int[] pq;
     private final int[] qp;
 
-    public MultiwayHeapPriorityQueue(int maxSize, final double[] weights) {
+    public MultiwayHeapPriorityQueue(int maxSize, final Double[] weights) {
         this(maxSize, weights, DEFAULT_HEAP_NUM_WAYS);
     }
 
-    public MultiwayHeapPriorityQueue(int maxSize, final double[] weights, final int ways) {
+    public MultiwayHeapPriorityQueue(int maxSize, final Double[] weights, final int ways) {
         this.weights = weights;
         pq = new int[maxSize + 1];
         qp = new int[maxSize + 1];

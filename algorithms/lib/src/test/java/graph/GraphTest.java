@@ -8,12 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import static graph.GraphUtils.breadthFirstTraversal;
 import static graph.GraphUtils.depthFirstTraversal;
+import static graph.GraphUtils.dijkstra;
 import static graph.GraphUtils.isValidBST;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GraphTest {
+
     @Test
     void dft() {
         final Vertex<?> root = new SimpleVertex(1);
@@ -67,6 +70,16 @@ public class GraphTest {
         assertTrue(isValidBST(root));
     }
 
+    @Test
+    void dijkstraSPT() {
+        final Vertex<?> root = new SimpleVertex(0);
+        final Graph graph = simpleGraphWithWeights(root);
+        final GraphUtils.Pair<Edge[], Double[]> pair = dijkstra(graph, root);
+        final Double[] weights = pair.two;
+        final Double[] expected = {0.0, 0.41, 0.8200000000000001, 0.86, 0.5, 0.29};
+        assertArrayEquals(expected, weights);
+    }
+
     private Graph simpleGraph(final Vertex<?> root) {
         final Vertex<?> two = new SimpleVertex(2);
         final Vertex<?> three = new SimpleVertex(3);
@@ -78,6 +91,28 @@ public class GraphTest {
                 .withEdge(Edge.of(two, new SimpleVertex(5)))
                 .withEdge(Edge.of(three, new SimpleVertex(6)))
                 .withEdge(Edge.of(three, new SimpleVertex(7)))
+                .build();
+    }
+
+    private Graph simpleGraphWithWeights(final Vertex<?> root) {
+        final Vertex<?> one = new SimpleVertex(1);
+        final Vertex<?> two = new SimpleVertex(2);
+        final SimpleVertex three = new SimpleVertex(3);
+        final SimpleVertex four = new SimpleVertex(4);
+        final SimpleVertex five = new SimpleVertex(5);
+
+        return GraphBuilder.defaultGraph()
+                .withEdge(Edge.of(root, one).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.41d)))
+                .withEdge(Edge.of(root, five).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.29d)))
+                .withEdge(Edge.of(one, two).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.51d)))
+                .withEdge(Edge.of(one, four).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.32d)))
+                .withEdge(Edge.of(two, three).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.50d)))
+                .withEdge(Edge.of(three, root).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.45d)))
+                .withEdge(Edge.of(three, five).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.38d)))
+                .withEdge(Edge.of(four, two).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.32d)))
+                .withEdge(Edge.of(four, three).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.36d)))
+                .withEdge(Edge.of(five, one).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.29d)))
+                .withEdge(Edge.of(five, four).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.21d)))
                 .build();
     }
 

@@ -12,11 +12,14 @@ import java.util.TreeSet;
 
 class LinkedListAdjacencyList implements AdjacencyList {
     private final Map<Vertex<?>, List<Edge>> adjacencyList = new HashMap<>();
-    private int edgeCount;
+    private final Map<Integer, Vertex<?>> vertices = new HashMap<>();
+
+    private volatile int edgeCount;
 
     @Override
     public void addEdge(Edge edge) {
         Vertex<?> v = edge.vertices()[0];
+        Vertex<?> w = edge.vertices()[1];
 
         synchronized (adjacencyList) {
             List<Edge> adjacentToV = adjacencyList.computeIfAbsent(v, k -> new LinkedList<>());
@@ -25,6 +28,11 @@ class LinkedListAdjacencyList implements AdjacencyList {
                 adjacentToV.add(edge);
 
                 ++edgeCount;
+
+                synchronized (vertices) {
+                    vertices.putIfAbsent(v.number(), v);
+                    vertices.putIfAbsent(w.number(), w);
+                }
             }
         }
     }
@@ -37,6 +45,11 @@ class LinkedListAdjacencyList implements AdjacencyList {
     }
 
     @Override
+    public int countVertices() {
+        return vertices.size();
+    }
+
+    @Override
     public Optional<List<Edge>> forVertex(final Vertex<?> v) {
         return Optional.ofNullable(adjacencyList.get(v));
     }
@@ -46,9 +59,23 @@ class LinkedListAdjacencyList implements AdjacencyList {
         Vertex<?> v = edge.vertices()[0];
 
         synchronized (adjacencyList) {
-            final List<Edge> edges = adjacencyList.get(v);
-            edges.remove(edge);
-            --edgeCount;
+            final List<Edge> vEdges = adjacencyList.get(v);
+            if (vEdges != null) {
+                vEdges.remove(edge);
+                --edgeCount;
+
+                synchronized (vertices) {
+                    if (vEdges.isEmpty()) {
+                        vertices.remove(v.number());
+                    }
+
+                    Vertex<?> w = edge.vertices()[1];
+
+                    if (!adjacencyList.containsKey(w) || adjacencyList.get(w).isEmpty()) {
+                        vertices.remove(w.number());
+                    }
+                }
+            }
         }
     }
 

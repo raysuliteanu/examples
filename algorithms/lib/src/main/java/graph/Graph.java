@@ -4,9 +4,13 @@ import java.util.Iterator;
 import java.util.Optional;
 
 public interface Graph {
-    default boolean isDirected() { return false;}
+    default boolean isDirected() {
+        return false;
+    }
 
     int countEdges();
+
+    int countVertices();
 
     void insert(Edge edge);
 

@@ -9,6 +9,8 @@ public interface AdjacencyList {
 
     int countEdges();
 
+    int countVertices();
+
     Optional<List<Edge>> forVertex(Vertex<?> v);
 
     void removeEdge(Edge edge);
