@@ -1,7 +1,7 @@
 package graph;
 
 public abstract class AbstractValueVertex<T> extends AbstractVertex<T> implements ValueVertex<T> {
-    private final T value;
+    protected T value;
 
     public AbstractValueVertex(final int number) {
         this(number, null);

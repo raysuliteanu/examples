@@ -2,15 +2,48 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 
 public abstract class GraphUtils {
+    // assumptions: graph vertex values initialized to Integer.MAX_VALUE, edges have (integer) weights
+    public static List<Vertex<?>> dijkstra(final Graph graph, final MutableValueVertex<Integer> start, final MutableValueVertex<Integer> end) {
+        final Set<Vertex<?>> visited = new HashSet<>();
+        final List<MutableValueVertex<Integer>> toVisit = new LinkedList<>();
+
+        start.setValue(0);
+
+        toVisit.add(start);
+
+        while (!(toVisit.isEmpty() || visited.contains(end))) {
+            MutableValueVertex<Integer> current = toVisit.remove(0);
+            final Iterator<Vertex<?>> adjacencyList = graph.adjacencyList(current);
+            while (adjacencyList.hasNext()) {
+                Vertex<?> vertex = adjacencyList.next();
+                if (!visited.contains(vertex)) {
+                    final MutableValueVertex<Integer> mutableVertex = (MutableValueVertex<Integer>) vertex;
+                    int weight = current.value() + 0; // TODO: need edge between current and vertex to get edge weight
+                    final Integer value = mutableVertex.value();
+                    if (weight < value) {
+                        mutableVertex.setValue(weight);
+                    }
+                    toVisit.add(mutableVertex);
+                }
+            }
+            visited.add(current);
+        }
+
+        final List<Vertex<?>> shortestPath = new ArrayList<>();
+        return shortestPath;
+    }
+
     public static List<Vertex<?>> depthFirstTraversal(final Graph graph, final Vertex<?> start) {
         final List<Vertex<?>> output = new LinkedList<>();
         dft(graph, start, output, 0);
