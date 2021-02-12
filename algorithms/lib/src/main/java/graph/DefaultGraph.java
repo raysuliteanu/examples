@@ -22,11 +22,6 @@ public class DefaultGraph implements Graph {
     }
 
     @Override
-    public int countVertices() {
-        return adjacencyList.countVertices();
-    }
-
-    @Override
     public int countEdges() {
         return adjacencyList.countEdges();
     }
@@ -43,9 +38,9 @@ public class DefaultGraph implements Graph {
 
     @Override
     public boolean edge(final Vertex<?> v, final Vertex<?> w) {
-        Iterator<Vertex<?>> iterator = adjacencyList(v);
+        Iterator<Edge> iterator = adjacencyList(v);
         while (iterator.hasNext()) {
-            if (iterator.next().number() == w.number()) {
+            if (iterator.next().vertices()[1].number() == w.number()) {
                 return true;
             }
         }
@@ -59,7 +54,7 @@ public class DefaultGraph implements Graph {
     }
 
     @Override
-    public Iterator<Vertex<?>> adjacencyList(final Vertex<?> v) {
+    public Iterator<Edge> adjacencyList(final Vertex<?> v) {
         return new AdjacencyListIterator(adjacencyList.forVertex(v).orElseGet(Collections::emptyList));
     }
 
@@ -71,9 +66,9 @@ public class DefaultGraph implements Graph {
         for (Vertex<?> vertex : vertices) {
             builder.append(vertex).append(": ");
             List<Integer> ids = new ArrayList<>();
-            Iterator<Vertex<?>> iterator = adjacencyList(vertex);
+            Iterator<Edge> iterator = adjacencyList(vertex);
             while (iterator.hasNext()) {
-                ids.add(iterator.next().number());
+                ids.add(iterator.next().vertices()[0].number());
             }
             builder.append(Arrays.toString(ids.stream().sorted().toArray())).append("\n");
         }
@@ -81,10 +76,10 @@ public class DefaultGraph implements Graph {
         return builder.toString();
     }
 
-    static class AdjacencyListIterator implements Iterator<Vertex<?>> {
-        private final Iterator<Vertex<?>> iterator;
+    static class AdjacencyListIterator implements Iterator<Edge> {
+        private final Iterator<Edge> iterator;
 
-        public AdjacencyListIterator(final List<Vertex<?>> list) {
+        public AdjacencyListIterator(final List<Edge> list) {
             iterator = list.iterator();
         }
 
@@ -94,7 +89,7 @@ public class DefaultGraph implements Graph {
         }
 
         @Override
-        public Vertex<?> next() {
+        public Edge next() {
             return iterator.next();
         }
     }

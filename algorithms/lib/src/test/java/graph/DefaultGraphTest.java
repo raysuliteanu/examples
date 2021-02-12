@@ -13,14 +13,11 @@ class DefaultGraphTest {
         Vertex<String> third = new SimpleVertex(30);
 
         DefaultGraph graph = new DefaultGraph();
-        graph.insert(new Edge(first, second));
-        graph.insert(new Edge(third, second));
+        graph.insert(Edge.of(first, second));
+        graph.insert(Edge.of(third, second));
         assertTrue(graph.edge(first, second));
-        assertTrue(graph.edge(second, first));
         assertFalse(graph.edge(first, third));
-        assertTrue(graph.edge(second, third));
         assertTrue(graph.edge(third, second));
-        assertTrue(graph.edge(second, third));
         assertFalse(graph.edge(third, third));
     }
 }

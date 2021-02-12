@@ -2,46 +2,18 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 
 public abstract class GraphUtils {
-    // assumptions: graph vertex values initialized to Integer.MAX_VALUE, edges have (integer) weights
     public static List<Vertex<?>> dijkstra(final Graph graph, final MutableValueVertex<Integer> start, final MutableValueVertex<Integer> end) {
-        final Set<Vertex<?>> visited = new HashSet<>();
-        final List<MutableValueVertex<Integer>> toVisit = new LinkedList<>();
-
-        start.setValue(0);
-
-        toVisit.add(start);
-
-        while (!(toVisit.isEmpty() || visited.contains(end))) {
-            MutableValueVertex<Integer> current = toVisit.remove(0);
-            final Iterator<Vertex<?>> adjacencyList = graph.adjacencyList(current);
-            while (adjacencyList.hasNext()) {
-                Vertex<?> vertex = adjacencyList.next();
-                if (!visited.contains(vertex)) {
-                    final MutableValueVertex<Integer> mutableVertex = (MutableValueVertex<Integer>) vertex;
-                    int weight = current.value() + 0; // TODO: need edge between current and vertex to get edge weight
-                    final Integer value = mutableVertex.value();
-                    if (weight < value) {
-                        mutableVertex.setValue(weight);
-                    }
-                    toVisit.add(mutableVertex);
-                }
-            }
-            visited.add(current);
-        }
-
-        final List<Vertex<?>> shortestPath = new ArrayList<>();
-        return shortestPath;
+        return Collections.emptyList();
     }
 
     public static List<Vertex<?>> depthFirstTraversal(final Graph graph, final Vertex<?> start) {
@@ -53,11 +25,12 @@ public abstract class GraphUtils {
     private static void dft(final Graph graph, final Vertex<?> vertex, final List<Vertex<?>> output, final int order) {
         output.add(order, vertex);
 
-        final Iterator<Vertex<?>> adjacencyList = graph.adjacencyList(vertex);
+        final Iterator<Edge> adjacencyList = graph.adjacencyList(vertex);
         while (adjacencyList.hasNext()) {
-            final Vertex<?> next = adjacencyList.next();
-            if (!output.contains(next)) {
-                dft(graph, next, output, order + 1);
+            final Edge next = adjacencyList.next();
+            final Vertex<?> nextVertex = next.vertices()[1];
+            if (!output.contains(nextVertex)) {
+                dft(graph, nextVertex, output, order + 1);
             }
         }
     }
@@ -74,11 +47,12 @@ public abstract class GraphUtils {
             visited.set(current.number());
             output.add(current);
 
-            final Iterator<Vertex<?>> adjacencyList = graph.adjacencyList(current);
+            final Iterator<Edge> adjacencyList = graph.adjacencyList(current);
             while (adjacencyList.hasNext()) {
-                final Vertex<?> next = adjacencyList.next();
-                if (!visited.get(next.number())) {
-                    toVisit.add(next);
+                final Edge next = adjacencyList.next();
+                final Vertex<?> nextVertex = next.vertices()[0];
+                if (!visited.get(nextVertex.number())) {
+                    toVisit.add(nextVertex);
                 }
             }
         }

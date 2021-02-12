@@ -7,11 +7,9 @@ import java.util.Set;
 public interface AdjacencyList {
     void addEdge(Edge edge);
 
-    int countVertices();
-
     int countEdges();
 
-    Optional<List<Vertex<?>>> forVertex(Vertex<?> v);
+    Optional<List<Edge>> forVertex(Vertex<?> v);
 
     void removeEdge(Edge edge);
 

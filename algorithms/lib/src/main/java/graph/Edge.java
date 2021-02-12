@@ -41,4 +41,21 @@ public class Edge {
     public Optional<Attribute<?>> getAttribute(final String attributeName) {
         return attributes.stream().filter(value -> attributeName.equals(value.name())).findFirst();
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Edge edge = (Edge) o;
+        return Arrays.equals(vertices, edge.vertices);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(vertices);
+    }
 }

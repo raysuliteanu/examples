@@ -19,7 +19,7 @@ public class GraphTest {
         final Vertex<?> root = new SimpleVertex(1);
         final Graph graph = simpleGraph(root);
         List<Vertex<?>> output = depthFirstTraversal(graph, root);
-        assertEquals(graph.countVertices(), output.size());
+        assertEquals(7, output.size());
     }
 
     @Test

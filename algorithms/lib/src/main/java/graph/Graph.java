@@ -6,8 +6,6 @@ import java.util.Optional;
 public interface Graph {
     default boolean isDirected() { return false;}
 
-    int countVertices();
-
     int countEdges();
 
     void insert(Edge edge);
@@ -18,5 +16,5 @@ public interface Graph {
 
     Optional<Vertex<?>> vertex(int number);
 
-    Iterator<Vertex<?>> adjacencyList(Vertex<?> v);
+    Iterator<Edge> adjacencyList(Vertex<?> v);
 }

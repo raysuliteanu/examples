@@ -13,7 +13,6 @@ class LinkedListAdjacencyListTest {
     void addEdge() {
         LinkedListAdjacencyList adjacencyList = new LinkedListAdjacencyList();
         adjacencyList.addEdge(new Edge(new BinaryVertex<>(10), new BinaryVertex<>(20)));
-        assertEquals(2, adjacencyList.countVertices());
         assertEquals(1, adjacencyList.countEdges());
     }
 
@@ -23,11 +22,9 @@ class LinkedListAdjacencyListTest {
         BinaryVertex<Integer> first = new BinaryVertex<>(10);
         BinaryVertex<Integer> second = new BinaryVertex<>(20);
         adjacencyList.addEdge(new Edge(first, second));
-        assertEquals(2, adjacencyList.countVertices());
         assertEquals(1, adjacencyList.countEdges());
 
         adjacencyList.addEdge(new Edge(first, second));
-        assertEquals(2, adjacencyList.countVertices());
         assertEquals(1, adjacencyList.countEdges());
     }
 
@@ -41,15 +38,15 @@ class LinkedListAdjacencyListTest {
         adjacencyList.addEdge(new Edge(first, new BinaryVertex<>(50)));
         adjacencyList.addEdge(new Edge(first, new BinaryVertex<>(60)));
 
-        Optional<List<Vertex<?>>> vertices = adjacencyList.forVertex(first);
+        Optional<List<Edge>> vertices = adjacencyList.forVertex(first);
         assertTrue(vertices.isPresent());
-        List<Vertex<?>> adjacencyListForFirstVertex = vertices.get();
+        List<Edge> adjacencyListForFirstVertex = vertices.get();
         assertEquals(5, adjacencyListForFirstVertex.size());
 
-        adjacencyListForFirstVertex.forEach(vertex -> {
-            Optional<List<Vertex<?>>> vertexList = adjacencyList.forVertex(vertex);
-            assertTrue(vertexList.isPresent());
-            assertEquals(1, vertexList.get().size());
+        adjacencyListForFirstVertex.forEach(edge -> {
+            Optional<List<Edge>> edges = adjacencyList.forVertex(edge.vertices()[0]);
+            assertTrue(edges.isPresent());
+            assertEquals(5, edges.get().size());
         });
     }
 
@@ -79,30 +76,22 @@ class LinkedListAdjacencyListTest {
         adjacencyList.addEdge(four);
         adjacencyList.addEdge(five);
 
-        Optional<List<Vertex<?>>> vertices = adjacencyList.forVertex(first);
-        assertTrue(vertices.isPresent());
-        List<Vertex<?>> adjacencyListForVertex = vertices.get();
+        Optional<List<Edge>> edges = adjacencyList.forVertex(first);
+        assertTrue(edges.isPresent());
+
+        List<Edge> adjacencyListForVertex = edges.get();
 
         final int numberAdjacentToFirstVertex = numberVertices - 1;
         assertEquals(numberAdjacentToFirstVertex, adjacencyListForVertex.size());
-
-        assertEquals(numberVertices, adjacencyList.countVertices());
         assertEquals(numberEdges, adjacencyList.countEdges());
 
         adjacencyList.removeEdge(four);
 
-        vertices = adjacencyList.forVertex(first);
-        assertTrue(vertices.isPresent());
-        adjacencyListForVertex = vertices.get();
-        // first vertex has 4 adjacent vertices after removing one
+        edges = adjacencyList.forVertex(first);
+        assertTrue(edges.isPresent());
+        adjacencyListForVertex = edges.get();
+        // first vertex has 4 adjacent edges after removing one
         assertEquals(numberEdges - 1, adjacencyListForVertex.size());
-
-        vertices = adjacencyList.forVertex(fifth);
-        assertTrue(vertices.isPresent());
-        adjacencyListForVertex = vertices.get();
-        assertEquals(0, adjacencyListForVertex.size());
-
-        assertEquals(6, adjacencyList.countVertices());
         assertEquals(4, adjacencyList.countEdges());
     }
 }
