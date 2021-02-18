@@ -6,6 +6,21 @@ import java.util.concurrent.RecursiveAction;
 import static java.lang.System.arraycopy;
 
 public abstract class SortUtils {
+    public static void bubbleSort(int[] array) {
+        // for each element
+        for (int i = 0; i < array.length; i++) {
+            // from end to beginning of the array
+            for (int j = array.length - 1; j > i; j--) {
+                // "bubble" up smaller elements towards the front
+                // after each pass the left side is more and more sorted,
+                // hence 'i' iterates left to right and bounds 'j'
+                if (array[j] < array[j - 1]) {
+                    exchange(array, j - 1, j);
+                }
+            }
+        }
+    }
+
     public static void insertionSort(int[] array) {
 
         // initialize by moving smallest element to position 0 as a 'sentinel'

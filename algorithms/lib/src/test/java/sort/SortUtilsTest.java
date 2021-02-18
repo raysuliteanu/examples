@@ -11,6 +11,7 @@ import static java.lang.System.out;
 import static java.util.Arrays.parallelSort;
 import static java.util.Arrays.sort;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static sort.SortUtils.bubbleSort;
 import static sort.SortUtils.forkJoinMergesort;
 import static sort.SortUtils.insertionSort;
 import static sort.SortUtils.mergeSort;
@@ -108,6 +109,64 @@ public class SortUtilsTest {
         arraycopy(ints, 0, sorted, 0, ints.length);
         sort(sorted);
         insertionSort(ints);
+        assertArrayEquals(sorted, ints);
+    }
+
+    @Test
+    public void testBubbleSort() {
+        final int[] ints = generateInts(100);
+        final int[] sorted = new int[ints.length];
+        arraycopy(ints, 0, sorted, 0, ints.length);
+        sort(sorted);
+        bubbleSort(ints);
+        assertArrayEquals(sorted, ints);
+    }
+
+    @Test
+    public void perf() {
+        long start, selection = 0, insertion = 0, bubble = 0;
+
+        final int iterations = 5;
+        for (int i = 0; i < iterations; i++) {
+            int[] ints = generateInts(10_000);
+            int[] sorted = new int[ints.length];
+            arraycopy(ints, 0, sorted, 0, ints.length);
+            start = System.currentTimeMillis();
+
+            selectionSort(ints);
+
+            selection += (System.currentTimeMillis() - start);
+            verify(ints, sorted);
+
+            ints = generateInts(10_000);
+            sorted = new int[ints.length];
+            arraycopy(ints, 0, sorted, 0, ints.length);
+            start = System.currentTimeMillis();
+
+            insertionSort(ints);
+
+            insertion += (System.currentTimeMillis() - start);
+            verify(ints, sorted);
+
+            ints = generateInts(10_000);
+            sorted = new int[ints.length];
+            arraycopy(ints, 0, sorted, 0, ints.length);
+            start = System.currentTimeMillis();
+
+            bubbleSort(ints);
+
+            bubble += (System.currentTimeMillis() - start);
+            verify(ints, sorted);
+        }
+
+        out.printf("selection sort (in ms) total %d, avg %f\n", selection, selection / (double) iterations);
+        out.printf("insertion sort (in ms) total %d, avg %f\n", insertion, insertion / (double) iterations);
+        out.printf("bubble sort (in ms) total %d, avg %f\n", bubble, bubble / (double) iterations);
+
+    }
+
+    private void verify(final int[] ints, final int[] sorted) {
+        sort(sorted);
         assertArrayEquals(sorted, ints);
     }
 
