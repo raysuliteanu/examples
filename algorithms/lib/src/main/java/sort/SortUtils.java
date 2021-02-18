@@ -6,6 +6,24 @@ import java.util.concurrent.RecursiveAction;
 import static java.lang.System.arraycopy;
 
 public abstract class SortUtils {
+    public static void selectionSort(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[j] < array[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            exchange(array, i, minIndex);
+        }
+    }
+
+    private static void exchange(final int[] array, final int i, final int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
     public static void mergeSort(int[] array, int size) {
         if (size > 1) {
             int mid = size / 2;
@@ -29,7 +47,6 @@ public abstract class SortUtils {
         else {
             ForkJoinPool.commonPool().invoke(new ForkJoinMerge(array, size));
         }
-
     }
 
     private static void merge(final int[] dest, final int[] left, final int[] right) {

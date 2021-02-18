@@ -2,15 +2,18 @@ package sort;
 
 import java.util.Random;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.System.arraycopy;
 import static java.lang.System.currentTimeMillis;
 import static java.lang.System.out;
 import static java.util.Arrays.parallelSort;
+import static java.util.Arrays.sort;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static sort.SortUtils.forkJoinMergesort;
 import static sort.SortUtils.mergeSort;
+import static sort.SortUtils.selectionSort;
 
 public class SortUtilsTest {
     @Test
@@ -60,8 +63,9 @@ public class SortUtilsTest {
     }
 
     @Test
+    @Disabled
     public void forkJoinMergeWithTiming() {
-        int size = 10_000_000;
+        int size = 5_000_000;
         int[] toBeSorted = new int[size];
         int[] toBeSortedFJ = new int[size];
         for (int i = 0; i < 10; i++) {
@@ -86,11 +90,21 @@ public class SortUtilsTest {
         }
     }
 
+    @Test
+    public void testSelectionSort() {
+        final int[] ints = generateInts(100);
+        final int[] sorted = new int[ints.length];
+        arraycopy(ints, 0, sorted, 0, ints.length);
+        sort(sorted);
+        selectionSort(ints);
+        assertArrayEquals(sorted, ints);
+    }
+
     private int[] generateInts(final int size) {
         Random random = new Random(currentTimeMillis());
         int[] original = new int[size];
         for (int i = 0; i < size; i++) {
-            original[i] = random.nextInt();
+            original[i] = Math.abs(random.nextInt(10_000));
         }
         return original;
     }
