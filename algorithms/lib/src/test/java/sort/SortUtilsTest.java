@@ -12,6 +12,7 @@ import static java.util.Arrays.parallelSort;
 import static java.util.Arrays.sort;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static sort.SortUtils.forkJoinMergesort;
+import static sort.SortUtils.insertionSort;
 import static sort.SortUtils.mergeSort;
 import static sort.SortUtils.selectionSort;
 
@@ -20,7 +21,7 @@ public class SortUtilsTest {
     public void merge() {
         int[] actual = {5, 1, 6, 2, 3, 4};
         int[] expected = {1, 2, 3, 4, 5, 6};
-        mergeSort(actual, actual.length);
+        mergeSort(actual);
         assertArrayEquals(expected, actual);
     }
 
@@ -28,7 +29,7 @@ public class SortUtilsTest {
     public void mergeOneElement() {
         int[] actual = {5};
         int[] expected = {5};
-        mergeSort(actual, actual.length);
+        mergeSort(actual);
         assertArrayEquals(expected, actual);
     }
 
@@ -36,7 +37,7 @@ public class SortUtilsTest {
     public void mergeEmpty() {
         int[] actual = {};
         int[] expected = {};
-        mergeSort(actual, actual.length);
+        mergeSort(actual);
         assertArrayEquals(expected, actual);
     }
 
@@ -44,7 +45,7 @@ public class SortUtilsTest {
     public void forkJoinMergeShortCircuit() {
         int[] actual = {5, 1, 6, 2, 3, 4};
         int[] expected = {1, 2, 3, 4, 5, 6};
-        mergeSort(actual, actual.length);
+        mergeSort(actual);
         assertArrayEquals(expected, actual);
     }
 
@@ -56,7 +57,7 @@ public class SortUtilsTest {
         int[] toBeSorted = new int[size];
         arraycopy(original, 0, toBeSorted, 0, size);
 
-        forkJoinMergesort(toBeSorted, size);
+        forkJoinMergesort(toBeSorted, 1000);
         parallelSort(original); // uses optimized quicksort
 
         assertArrayEquals(original, toBeSorted);
@@ -74,12 +75,12 @@ public class SortUtilsTest {
             arraycopy(original, 0, toBeSortedFJ, 0, size);
 
             long start = currentTimeMillis();
-            mergeSort(toBeSorted, size);
+            mergeSort(toBeSorted);
             long elapsed = currentTimeMillis() - start;
             out.print("mergesort: " + elapsed + "ms\t");
 
             start = currentTimeMillis();
-            forkJoinMergesort(toBeSortedFJ, size);
+            forkJoinMergesort(toBeSortedFJ, 1000);
             elapsed = currentTimeMillis() - start;
             out.print("forkJoinMerge: " + elapsed + "ms\t");
 
@@ -97,6 +98,16 @@ public class SortUtilsTest {
         arraycopy(ints, 0, sorted, 0, ints.length);
         sort(sorted);
         selectionSort(ints);
+        assertArrayEquals(sorted, ints);
+    }
+
+    @Test
+    public void testInsertionSort() {
+        final int[] ints = generateInts(100);
+        final int[] sorted = new int[ints.length];
+        arraycopy(ints, 0, sorted, 0, ints.length);
+        sort(sorted);
+        insertionSort(ints);
         assertArrayEquals(sorted, ints);
     }
 
