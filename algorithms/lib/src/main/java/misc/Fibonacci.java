@@ -1,6 +1,6 @@
 package misc;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 
 public abstract class Fibonacci {
     public static int fib(int value) {
@@ -27,7 +27,7 @@ public abstract class Fibonacci {
         return currentFib;
     }
 
-    static ConcurrentHashMap<Integer, Integer> memo = new ConcurrentHashMap<>();
+    static HashMap<Integer, Integer> memo = new HashMap<>();
 
     static {
         memo.put(0, 0);
