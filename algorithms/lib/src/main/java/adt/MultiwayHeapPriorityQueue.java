@@ -5,9 +5,11 @@ public class MultiwayHeapPriorityQueue {
     public static final int DEFAULT_HEAP_NUM_WAYS = 3;
     private int size = 0;
     private final int ways;
-    private final Double[] weights;
     private final int[] pq;
     private final int[] qp;
+
+    // NOTE: weights array is modified outside of this class; do not make a copy of the array on construction!
+    private final Double[] weights;
 
     public MultiwayHeapPriorityQueue(int maxSize, final Double[] weights) {
         this(maxSize, weights, DEFAULT_HEAP_NUM_WAYS);
