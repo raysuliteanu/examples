@@ -45,7 +45,8 @@ public class DefaultGraph implements Graph {
     public boolean edge(final Vertex<?> v, final Vertex<?> w) {
         Iterator<Edge> iterator = adjacencyList(v);
         while (iterator.hasNext()) {
-            if (iterator.next().vertices()[1].number() == w.number()) {
+            final Edge edge = iterator.next();
+            if (edge.toVertex().number() == w.number()) {
                 return true;
             }
         }
@@ -73,7 +74,7 @@ public class DefaultGraph implements Graph {
             List<Integer> ids = new ArrayList<>();
             Iterator<Edge> iterator = adjacencyList(vertex);
             while (iterator.hasNext()) {
-                ids.add(iterator.next().vertices()[0].number());
+                ids.add(iterator.next().fromVertex().number());
             }
             builder.append(Arrays.toString(ids.stream().sorted().toArray())).append("\n");
         }

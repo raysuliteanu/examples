@@ -42,7 +42,7 @@ public abstract class GraphUtils {
             final Iterator<Edge> adjacencyList = graph.adjacencyList(graph.vertex(v).get());
             while (adjacencyList.hasNext()) {
                 Edge edge = adjacencyList.next();
-                int w = edge.vertices()[1].number();
+                int w = edge.toVertex().number();
                 final Double weight = (Double) edge.getAttributeValue(WEIGHT).get();
                 double priority = weights[v] + weight;
                 if (priority < weights[w]) {
@@ -77,19 +77,19 @@ public abstract class GraphUtils {
 
     public static List<Vertex<?>> depthFirstTraversal(final Graph graph, final Vertex<?> start) {
         final List<Vertex<?>> output = new LinkedList<>();
-        dft(graph, start, output, 0);
+        dft(graph, start, output);
         return output;
     }
 
-    private static void dft(final Graph graph, final Vertex<?> vertex, final List<Vertex<?>> output, final int order) {
-        output.add(order, vertex);
+    private static void dft(final Graph graph, final Vertex<?> vertex, final List<Vertex<?>> output) {
+        output.add(vertex);
 
         final Iterator<Edge> adjacencyList = graph.adjacencyList(vertex);
         while (adjacencyList.hasNext()) {
             final Edge next = adjacencyList.next();
-            final Vertex<?> nextVertex = next.vertices()[1];
+            final Vertex<?> nextVertex = next.toVertex();
             if (!output.contains(nextVertex)) {
-                dft(graph, nextVertex, output, order + 1);
+                dft(graph, nextVertex, output);
             }
         }
     }
@@ -109,7 +109,7 @@ public abstract class GraphUtils {
             final Iterator<Edge> adjacencyList = graph.adjacencyList(current);
             while (adjacencyList.hasNext()) {
                 final Edge next = adjacencyList.next();
-                final Vertex<?> nextVertex = next.vertices()[0];
+                final Vertex<?> nextVertex = next.fromVertex();
                 if (!visited.get(nextVertex.number())) {
                     toVisit.add(nextVertex);
                 }

@@ -47,6 +47,14 @@ public class Edge {
         return vertices;
     }
 
+    public Vertex<?> fromVertex() {
+        return vertices[0];
+    }
+
+    public Vertex<?> toVertex() {
+        return vertices[1];
+    }
+
     public void addAttribute(Attribute<?> attribute) {
         attributes.add(attribute);
     }
@@ -56,15 +64,17 @@ public class Edge {
     }
 
     public <T> Optional<T> getAttributeValue(final String attributeName) {
-        final Optional<Attribute<?>> attribute = attributes.stream()
+        final Optional<Attribute<?>> optionalAttribute = attributes.stream()
                 .filter(value -> attributeName.equals(value.name()))
                 .findFirst();
 
-        if (attribute.isEmpty()) {
+        if (optionalAttribute.isEmpty()) {
             return Optional.empty();
         }
 
-        return (Optional<T>) Optional.of(attribute.get().value());
+        final Attribute<?> attribute = optionalAttribute.get();
+        final T value = (T) attribute.value();
+        return Optional.of(value);
     }
 
     @Override

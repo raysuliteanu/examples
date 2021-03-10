@@ -18,8 +18,8 @@ class LinkedListAdjacencyList implements AdjacencyList {
 
     @Override
     public void addEdge(Edge edge) {
-        Vertex<?> v = edge.vertices()[0];
-        Vertex<?> w = edge.vertices()[1];
+        Vertex<?> v = edge.fromVertex();
+        Vertex<?> w = edge.toVertex();
 
         synchronized (adjacencyList) {
             List<Edge> adjacentToV = adjacencyList.computeIfAbsent(v, k -> new LinkedList<>());
@@ -56,7 +56,7 @@ class LinkedListAdjacencyList implements AdjacencyList {
 
     @Override
     public void removeEdge(final Edge edge) {
-        Vertex<?> v = edge.vertices()[0];
+        Vertex<?> v = edge.fromVertex();
 
         synchronized (adjacencyList) {
             final List<Edge> vEdges = adjacencyList.get(v);
@@ -69,7 +69,7 @@ class LinkedListAdjacencyList implements AdjacencyList {
                         vertices.remove(v.number());
                     }
 
-                    Vertex<?> w = edge.vertices()[1];
+                    Vertex<?> w = edge.toVertex();
 
                     if (!adjacencyList.containsKey(w) || adjacencyList.get(w).isEmpty()) {
                         vertices.remove(w.number());
