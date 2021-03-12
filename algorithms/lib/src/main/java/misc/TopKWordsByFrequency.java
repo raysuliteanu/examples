@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static java.lang.Long.compare;
 import static java.util.stream.Collectors.counting;
@@ -28,29 +29,28 @@ public class TopKWordsByFrequency {
 
     public String[] sortFeatures(String[] features, String[] responses) {
         Pattern pattern = Pattern.compile(" ");
-        Map<String, Tuple> popularity = new HashMap<>(features.length);
+        Tuple[] popularity = new Tuple[features.length];
         for (int i = 0, featuresLength = features.length; i < featuresLength; i++) {
             final String feature = features[i];
             int count = 0;
             for (String response : responses) {
-                for (String word : pattern.splitAsStream(response).distinct().collect(toList())) {
-                    if (feature.equals(word)) {
+                Map<String, String> seen = new HashMap<>();
+                for (String word : pattern.split(response)) {
+                    if (!seen.containsKey(word) && feature.equals(word)) {
                         ++count;
                     }
+                    seen.put(word, word);
                 }
             }
-            popularity.put(feature, Tuple.of(count, i));
+            popularity[i] = Tuple.of(count, i);
         }
 
-        // if same count, sort/order by position in features[]
-        return popularity.entrySet().stream()
-                .sorted((o1, o2) -> {
-                    final Tuple value1 = o1.getValue();
-                    final Tuple value2 = o2.getValue();
-                    final int countCompare = Integer.compare(value2.count, value1.count);
-                    return countCompare != 0 ? countCompare : Integer.compare(value1.index, value2.index);
+        return Stream.of(popularity)
+                .sorted((t1, t2) -> {
+                    final int comparedCount = Integer.compare(t2.count, t1.count);
+                    return comparedCount != 0 ? comparedCount : Integer.compare(t1.index, t2.index);
                 })
-                .map(Map.Entry::getKey)
+                .map(t -> features[t.index])
                 .toArray(String[]::new);
     }
 
