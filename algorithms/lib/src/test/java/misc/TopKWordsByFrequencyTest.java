@@ -3,7 +3,7 @@ package misc;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.time.Duration;
 import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
@@ -49,11 +49,11 @@ class TopKWordsByFrequencyTest {
 
     @Test
     public void popularityLargeData() throws IOException {
-        processFile("/features1.txt");
-        processFile("/features2.txt");
+        assertTrue(processFile("/features1.txt").toMillis() < 10);
+        assertTrue(processFile("/features2.txt").toMillis() < 10);
     }
 
-    private void processFile(final String file) throws IOException {
+    private Duration processFile(final String file) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(file)))) {
             String line = reader.readLine();
             String[] features = pattern.matcher(line).results().map(mr -> mr.group(1)).toArray(String[]::new);
@@ -63,10 +63,8 @@ class TopKWordsByFrequencyTest {
             String[] responses = pattern.matcher(line).results().map(mr -> mr.group(1)).toArray(String[]::new);
 
             long start = System.currentTimeMillis();
-            final String[] result = wordsByFrequency.sortFeatures(features, responses);
-            long end = System.currentTimeMillis() - start;
-            System.out.println("took " + end + "ms");
-            System.out.println(Arrays.toString(result));
+            wordsByFrequency.sortFeatures(features, responses);
+            return Duration.ofMillis(System.currentTimeMillis() - start);
         }
     }
 }

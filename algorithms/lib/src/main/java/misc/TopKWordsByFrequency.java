@@ -2,10 +2,10 @@ package misc;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import static java.lang.Long.compare;
 import static java.util.stream.Collectors.counting;
@@ -28,51 +28,22 @@ public class TopKWordsByFrequency {
     }
 
     public String[] sortFeatures(String[] features, String[] responses) {
-        Pattern pattern = Pattern.compile(" ");
-        Tuple[] popularity = new Tuple[features.length];
-        for (int i = 0, featuresLength = features.length; i < featuresLength; i++) {
-            final String feature = features[i];
-            int count = 0;
-            for (String response : responses) {
-                Map<String, String> seen = new HashMap<>();
-                for (String word : pattern.split(response)) {
-                    if (!seen.containsKey(word) && feature.equals(word)) {
-                        ++count;
-                    }
-                    seen.put(word, word);
+        Map<String, Integer> popularity = new HashMap<>();
+        for (String feature : features) {
+            popularity.put(feature, 0);
+        }
+
+        for (String response : responses) {
+            Set<String> seen = new HashSet<>(Arrays.asList(response.split(" ")));
+            for (String s : seen) {
+                if (popularity.containsKey(s)) {
+                    popularity.put(s, popularity.get(s) + 1);
                 }
             }
-            popularity[i] = Tuple.of(count, i);
         }
 
-        return Stream.of(popularity)
-                .sorted((t1, t2) -> {
-                    final int comparedCount = Integer.compare(t2.count, t1.count);
-                    return comparedCount != 0 ? comparedCount : Integer.compare(t1.index, t2.index);
-                })
-                .map(t -> features[t.index])
-                .toArray(String[]::new);
-    }
+        Arrays.sort(features, (v1, v2) -> popularity.get(v2) - popularity.get(v1));
 
-    private static class Tuple {
-        final int count;
-        final int index;
-
-        private Tuple(final int count, final int index) {
-            this.count = count;
-            this.index = index;
-        }
-
-        static Tuple of(int count, int index) {
-            return new Tuple(count, index);
-        }
-
-        @Override
-        public String toString() {
-            return "Tuple{" +
-                    "count=" + count +
-                    ", index=" + index +
-                    '}';
-        }
+        return features;
     }
 }
