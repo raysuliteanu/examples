@@ -30,6 +30,10 @@ public class Edge {
         return new Edge(v1, v2);
     }
 
+    public static Edge of(final int v1, final int v2) {
+        return new Edge(new SimpleVertex(v1), new SimpleVertex(v2));
+    }
+
     public Edge with(Attribute<?> attribute) {
         addAttribute(attribute);
         return this;
