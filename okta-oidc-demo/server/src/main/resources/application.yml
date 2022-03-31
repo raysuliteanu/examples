@@ -16,7 +16,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: https://dev-913087.okta.com/oauth2/default/v1/keys
+          jwk-set-uri: https://dev-3925679.okta.com/oauth2/default/v1/keys
 server:
   port: 8081
   servlet:

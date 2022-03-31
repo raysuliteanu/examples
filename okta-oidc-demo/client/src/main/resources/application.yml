@@ -15,15 +15,15 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: https://dev-913087.okta.com/oauth2/default/v1/keys
+          jwk-set-uri: https://dev-3925679.okta.com/oauth2/default/v1/keys
       client:
         provider:
           okta:
-            issuer-uri: https://dev-913087.okta.com/oauth2/default
+            issuer-uri: https://dev-3925679.okta.com/oauth2/default
         registration:
           okta:
-            client-id: 0oafqpbaayDdRD1Wm356
-            client-secret: -h3--BOOoWxZB5WDRtc_gvZ5VpVdfzDht-leKotK
+            client-id: 0oavs1xn8xSUz4bCH5d6
+            client-secret: 5CdzAk8HgjlmEr45EDYhFM6061pvpfBavRzsR-Bn
 
 example:
   server: http://localhost:8081
