@@ -8,8 +8,8 @@ public abstract class GraphTestUtil {
         GraphBuilder graph = GraphBuilder.defaultGraph();
         for (int i = 0; i < numberOfEdges; i++) {
             int bound = numberOfEdges / 2;
-            SimpleVertex first = new SimpleVertex(random.nextInt(bound));
-            SimpleVertex second = new SimpleVertex(random.nextInt(bound));
+            Vertex<?> first = Vertex.of(random.nextInt(bound));
+            Vertex<?> second = Vertex.of(random.nextInt(bound));
             Edge edge = new Edge(first, second);
             graph.withEdge(edge);
         }

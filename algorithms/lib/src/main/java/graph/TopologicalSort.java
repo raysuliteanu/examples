@@ -3,6 +3,8 @@ package graph;
 import java.util.Iterator;
 import java.util.Stack;
 
+import static graph.Vertex.of;
+
 public class TopologicalSort {
     public static final int GRAY = 1;
     public static final int BLACK = 2;
@@ -33,7 +35,7 @@ public class TopologicalSort {
     }
 
     private static void topologicalSortRecursive(final int vertex, final Graph graph, final Stack<Integer> stack, final int[] visited) {
-        final Iterator<Edge> iterator = graph.adjacencyList(new SimpleVertex(vertex));
+        final Iterator<Edge> iterator = graph.adjacencyList(of(vertex));
         while (iterator.hasNext()) {
             Edge edge = iterator.next();
 

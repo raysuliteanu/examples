@@ -23,7 +23,7 @@ public abstract class SortUtils {
 
     public static void insertionSort(int[] array) {
 
-        // initialize by moving smallest element to position 0 as a 'sentinel'
+        // initialize by moving the smallest element to position 0 as a 'sentinel'
         for (int i = array.length - 1; i > 0; i--) {
             if (array[i - 1] > array[i]) {
                 exchange(array, i, i - 1);

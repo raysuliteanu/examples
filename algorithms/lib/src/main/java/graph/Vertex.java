@@ -10,5 +10,7 @@ public interface Vertex<T> {
         return Collections.emptyList();
     }
 
-    ;
+    static <T> Vertex<T> of(int index) {
+        return new GenericVertex<>(index);
+    }
 }

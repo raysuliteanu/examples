@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static java.util.Arrays.asList;
+
 /**
  * An Edge connects exactly two {@link graph.Vertex}s.
  * An Edge can have arbitrary {@link Attribute}s e.g. an attribute could represent a boolean that the edge has been
@@ -23,7 +25,7 @@ public class Edge {
 
     public Edge(Vertex<?> first, Vertex<?> second, Attribute<?>... attributes) {
         this(first, second);
-        this.attributes.addAll(Arrays.asList(attributes.clone()));
+        this.attributes.addAll(asList(attributes.clone()));
     }
 
     public static Edge of(final Vertex<?> v1, final Vertex<?> v2) {
@@ -31,7 +33,7 @@ public class Edge {
     }
 
     public static Edge of(final int v1, final int v2) {
-        return new Edge(new SimpleVertex(v1), new SimpleVertex(v2));
+        return new Edge(Vertex.of(v1), Vertex.of(v2));
     }
 
     public Edge with(Attribute<?> attribute) {

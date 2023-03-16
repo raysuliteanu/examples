@@ -19,7 +19,7 @@ public class GraphTest {
 
     @Test
     void dft() {
-        final Vertex<?> root = new SimpleVertex(1);
+        final Vertex<?> root = Vertex.of(1);
         final Graph graph = simpleGraph(root);
         List<Vertex<?>> output = depthFirstTraversal(graph, root);
         assertEquals(7, output.size());
@@ -33,7 +33,7 @@ public class GraphTest {
 
     @Test
     void validGeneralBft() {
-        final Vertex<?> root = new SimpleVertex(1);
+        final Vertex<?> root = Vertex.of(1);
         final Graph graph = simpleGraph(root);
         List<Vertex<?>> output = breadthFirstTraversal(graph, root);
         for (int i = 1; i <= output.size(); i++) {
@@ -72,7 +72,7 @@ public class GraphTest {
 
     @Test
     void dijkstraSPT() {
-        final Vertex<?> root = new SimpleVertex(0);
+        final Vertex<?> root = Vertex.of(0);
         final Graph graph = simpleGraphWithWeights(root);
         final GraphUtils.Pair<Edge[], Double[]> pair = dijkstra(graph, root);
         final Double[] weights = pair.two;
@@ -81,25 +81,25 @@ public class GraphTest {
     }
 
     private Graph simpleGraph(final Vertex<?> root) {
-        final Vertex<?> two = new SimpleVertex(2);
-        final Vertex<?> three = new SimpleVertex(3);
+        final Vertex<?> two = Vertex.of(2);
+        final Vertex<?> three = Vertex.of(3);
 
         return GraphBuilder.defaultGraph()
                 .withEdge(Edge.of(root, two))
                 .withEdge(Edge.of(root, three))
-                .withEdge(Edge.of(two, new SimpleVertex(4)))
-                .withEdge(Edge.of(two, new SimpleVertex(5)))
-                .withEdge(Edge.of(three, new SimpleVertex(6)))
-                .withEdge(Edge.of(three, new SimpleVertex(7)))
+                .withEdge(Edge.of(two, Vertex.of(4)))
+                .withEdge(Edge.of(two, Vertex.of(5)))
+                .withEdge(Edge.of(three, Vertex.of(6)))
+                .withEdge(Edge.of(three, Vertex.of(7)))
                 .build();
     }
 
     private Graph simpleGraphWithWeights(final Vertex<?> root) {
-        final Vertex<?> one = new SimpleVertex(1);
-        final Vertex<?> two = new SimpleVertex(2);
-        final SimpleVertex three = new SimpleVertex(3);
-        final SimpleVertex four = new SimpleVertex(4);
-        final SimpleVertex five = new SimpleVertex(5);
+        final Vertex<?> one = Vertex.of(1);
+        final Vertex<?> two = Vertex.of(2);
+        final Vertex<?> three = Vertex.of(3);
+        final Vertex<?> four = Vertex.of(4);
+        final Vertex<?> five = Vertex.of(5);
 
         return GraphBuilder.defaultGraph()
                 .withEdge(Edge.of(root, one).with(new DoubleAttribute(GraphUtils.WEIGHT, 0.41d)))
