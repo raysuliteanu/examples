@@ -4,20 +4,20 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SinglyLinkedList<E> implements List<E> {
-    SingleLinkNode<E> head;
+public class DoublyLinkedList<E> implements List<E> {
+    DoubleLinkNode<E> head;
     int size;
 
     @Override
     public void insert(final E element) {
-        SingleLinkNode<E> node = new SingleLinkNode<>();
+        DoubleLinkNode<E> node = new DoubleLinkNode<>();
         node.value = element;
 
         if (head == null) {
             head = node;
         }
         else {
-            SingleLinkNode<E> temp = head;
+            DoubleLinkNode<E> temp = head;
             while (temp.next != null) {
                 temp = temp.next;
             }
@@ -33,7 +33,7 @@ public class SinglyLinkedList<E> implements List<E> {
             throw new IllegalArgumentException("location " + location + " greater than list size " + size);
         }
 
-        SingleLinkNode<E> node = new SingleLinkNode<>();
+        DoubleLinkNode<E> node = new DoubleLinkNode<>();
         node.value = element;
 
         if (head == null) {
@@ -41,7 +41,7 @@ public class SinglyLinkedList<E> implements List<E> {
         }
         else {
             int index = 1;
-            SingleLinkNode<E> current = head;
+            DoubleLinkNode<E> current = head;
             while (index++ < location) {
                 current = current.next;
             }
@@ -71,14 +71,14 @@ public class SinglyLinkedList<E> implements List<E> {
 
 
         int index = 0;
-        SingleLinkNode<E> current = null;
-        SingleLinkNode<E> next = head;
+        DoubleLinkNode<E> current = null;
+        DoubleLinkNode<E> next = head;
         while (index++ < location) {
             current = next;
             next = next.next;
         }
 
-        SingleLinkNode<E> removed;
+        DoubleLinkNode<E> removed;
 
         if (current == null) {
             removed = head;
@@ -98,7 +98,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public E get(final int location) {
-        SingleLinkNode<E> current = head;
+        DoubleLinkNode<E> current = head;
 
         int index = 0;
         while (index++ < location) {
@@ -115,7 +115,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public boolean contains(final E value) {
-        SingleLinkNode<E> current = head;
+        DoubleLinkNode<E> current = head;
 
         int index = 0;
         while (index++ < size) {
@@ -130,7 +130,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public int indexOf(final E value) {
-        SingleLinkNode<E> current = head;
+        DoubleLinkNode<E> current = head;
 
         int index = 0;
         while (index < size) {
@@ -155,16 +155,17 @@ public class SinglyLinkedList<E> implements List<E> {
         return size == 0;
     }
 
-    static class SingleLinkNode<E> extends AbstractLinkNode<E>{
-        SingleLinkNode<E> next;
+    static class DoubleLinkNode<E> extends AbstractLinkNode<E>{
+        DoubleLinkNode<E> next;
+        DoubleLinkNode<E> prev;
     }
 
     private class ListIterator<T> implements Iterator<T> {
         final int originalSize;
         int index = 0;
-        SingleLinkNode<T> currentNode;
+        DoubleLinkNode<T> currentNode;
 
-        public ListIterator(final SingleLinkNode<T> head, final int size) {
+        public ListIterator(final DoubleLinkNode<T> head, final int size) {
             this.currentNode = head;
             originalSize = size;
         }
