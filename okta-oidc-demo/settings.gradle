@@ -1,4 +1,0 @@
-rootProject.name = 'okta-oidc-demo'
-
-include 'client'
-include 'server'
