@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package org.kidoni.logdb.model;
+
+option java_package = "org.kidoni.logdb.model";
+option java_outer_classname = "PersonProto";
+
+message Person {
+  string first_name = 1;
+  string last_name = 2;
+  string middle_name = 3;
+  string date_of_birth = 4;
+
+  message Address {
+    string street = 1;
+    string city = 2;
+    string state_or_province = 3;
+    string country = 4;
+    string post_code = 5;
+  }
+
+  repeated Address address = 5;
+}

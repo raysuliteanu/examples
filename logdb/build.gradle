@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id "com.google.protobuf" version "0.9.4"
+}
+
+group 'org.kidoni'
+version '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(20)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.protobuf:protobuf-java:3.14.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+tasks.withType(JavaCompile).all {
+    options.compilerArgs += ['--enable-preview', '-source', '20']
+}
+
+tasks.withType(Test).all {
+    jvmArgs += '--enable-preview'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+protobuf {
+    // Configure the protoc executable
+    protoc {
+        // Download from repositories
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+}
