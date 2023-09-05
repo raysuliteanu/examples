@@ -16,22 +16,19 @@ public class SimpleEditorEnhanced {
             for (int i = 0; i < ops; i++) {
                 String[] tokens = reader.readLine().split(" ");
                 switch (tokens[0]) {
-                    case "1": // append
+                    case "1" -> { // append
                         undoBuffer.push(content);
                         content += tokens[1];
-                        break;
-                    case "2": // delete
+                    }
+                    case "2" -> { // delete
                         undoBuffer.push(content);
                         content = content.substring(0, content.length() - Integer.parseInt(tokens[1]));
-                        break;
-                    case "3": // print
-                        System.out.println(content.charAt(Integer.parseInt(tokens[1]) - 1));
-                        break;
-                    case "4": // undo
-                        content = undoBuffer.pop();
-                        break;
-                    default:
-                        throw new IllegalArgumentException(Arrays.toString(tokens));
+                    }
+                    case "3" -> // print
+                            System.out.println(content.charAt(Integer.parseInt(tokens[1]) - 1));
+                    case "4" -> // undo
+                            content = undoBuffer.pop();
+                    default -> throw new IllegalArgumentException(Arrays.toString(tokens));
                 }
             }
         }

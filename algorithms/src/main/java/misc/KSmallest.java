@@ -1,6 +1,5 @@
 package misc;
 
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class KSmallest {
@@ -12,9 +11,8 @@ public class KSmallest {
                 .sorted()
                 .skip(k - 1)
                 .limit(1)
-                .collect(Collectors.toList())
+                .toList()
                 .get(0);
-
 
         return Integer.parseInt(value);
     }

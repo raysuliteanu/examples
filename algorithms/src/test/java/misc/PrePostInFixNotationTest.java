@@ -1,8 +1,8 @@
 package misc;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.EmptyStackException;
+
+import org.junit.jupiter.api.Test;
 
 import static misc.PrePostInFixNotation.evalPrefixExpression;
 import static org.junit.jupiter.api.Assertions.assertEquals;

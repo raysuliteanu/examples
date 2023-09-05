@@ -1,15 +1,17 @@
 package misc;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.regex.Pattern;
 
+import org.junit.jupiter.api.Test;
+
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TopKWordsByFrequencyTest {
     final TopKWordsByFrequency wordsByFrequency = new TopKWordsByFrequency();

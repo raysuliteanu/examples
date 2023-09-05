@@ -5,7 +5,9 @@ import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 public class MostCommonWord {
     public String mostCommonWord(String paragraph, String[] banned) {

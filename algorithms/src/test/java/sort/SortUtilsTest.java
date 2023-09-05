@@ -1,15 +1,21 @@
 package sort;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-
-import static java.lang.System.*;
+import static java.lang.System.arraycopy;
+import static java.lang.System.currentTimeMillis;
+import static java.lang.System.out;
 import static java.util.Arrays.parallelSort;
 import static java.util.Arrays.sort;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static sort.SortUtils.*;
+import static sort.SortUtils.bubbleSort;
+import static sort.SortUtils.forkJoinMergesort;
+import static sort.SortUtils.insertionSort;
+import static sort.SortUtils.mergeSort;
+import static sort.SortUtils.selectionSort;
 
 public class SortUtilsTest {
     @Test

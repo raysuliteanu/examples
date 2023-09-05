@@ -3,8 +3,10 @@ package misc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.concurrent.ConcurrentSkipListMap;
+
+import static java.lang.String.join;
+import static java.util.Objects.requireNonNull;
 
 /*
 You are given a english dictionary and a sequence of characters without word separated,
@@ -20,44 +22,23 @@ class MakeSentences {
         this.dictionary = dictionary;
     }
 
-    public List<String> makeSentence(String word) {
+    public List<String> makeSentences(String word) {
         if (word == null) {
             return null;
         }
 
         List<String> results = new ArrayList<>();
-
-        StringBuilder builder = new StringBuilder();
-
-        Stack<String> possibles = new Stack<>();
-
-        TrieNode cursor = dictionary;
-        char[] chars = word.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            cursor = cursor.children.get(chars[i]);
-
-            if (cursor != null) {
-                if (cursor.isWord) {
-                    if (i < chars.length - 1) {
-                        builder.append(cursor.word);
-                        possibles.push(builder.toString());
-                        possibles.push(builder.append(" ").toString());
-                    } else {
-                        for (String s : possibles) {
-                            results.add(s + word);
-                        }
-                    }
-
-                    cursor = dictionary;
-                }
-            } else {
-                if (i < chars.length - 1) {
-                    results.clear();
-                }
-                break;
+        TrieNode current = dictionary;
+        List<String> words = new ArrayList<>();
+        for (char c : word.toCharArray()) {
+            current = requireNonNull(current).children.get(c);
+            if (current != null && current.isWord) {
+                words.add(current.word);
+                current = dictionary;
             }
-
         }
+
+        results.add(join(" ", words));
 
         return results;
     }

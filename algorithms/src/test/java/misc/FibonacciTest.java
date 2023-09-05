@@ -2,7 +2,9 @@ package misc;
 
 import org.junit.jupiter.api.Test;
 
-import static misc.Fibonacci.*;
+import static misc.Fibonacci.fib;
+import static misc.Fibonacci.fibBU;
+import static misc.Fibonacci.fibMemo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FibonacciTest {

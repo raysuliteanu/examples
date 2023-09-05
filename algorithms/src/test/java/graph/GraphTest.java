@@ -1,13 +1,19 @@
 package graph;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static graph.GraphUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import static graph.GraphUtils.breadthFirstTraversal;
+import static graph.GraphUtils.depthFirstTraversal;
+import static graph.GraphUtils.dijkstra;
+import static graph.GraphUtils.isValidBST;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GraphTest {
 

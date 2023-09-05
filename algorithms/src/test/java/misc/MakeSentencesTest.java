@@ -1,10 +1,10 @@
 package misc;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,7 +24,7 @@ class MakeSentencesTest {
     @Test
     void multiple() {
         MakeSentences makeSentences = new MakeSentences(dictionary);
-        final List<String> result = makeSentences.makeSentence("thisishotdog");
+        final List<String> result = makeSentences.makeSentences("thisishotdog");
         final List<String> expected = Arrays.asList("this is hot dog", "this is hotdog");
         assertEquals(expected, result);
     }

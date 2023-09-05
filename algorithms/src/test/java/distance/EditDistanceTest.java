@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static distance.EditDistance.OneEditApart;
 import static distance.EditDistance.editDistance;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EditDistanceTest {
     @Test
