@@ -1,9 +1,6 @@
 package misc;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.PriorityQueue;
+import java.util.*;
 
 class LFUCache {
     private final int capacity;
@@ -16,16 +13,16 @@ class LFUCache {
         cache = new HashMap<>(capacity);
     }
 
-    public int get(int key) {
+    public Optional<Integer> get(int key) {
         synchronized (cache) {
             Entry entry = cache.get(key);
             if (entry == null) {
-                return -1;
+                return Optional.empty();
             }
 
             update(entry, entry.value);
 
-            return entry.value;
+            return Optional.of(entry.value);
         }
     }
 
@@ -86,15 +83,11 @@ class LFUCache {
          */
         public int compareTo(Entry e) {
             int compare = Integer.compare(accessCount, e.accessCount);
-            return compare != 0 ? compare :
-                    Long.compare(lastAccessTimeNanos, e.lastAccessTimeNanos);
+            return compare != 0 ? compare : Long.compare(lastAccessTimeNanos, e.lastAccessTimeNanos);
         }
 
         public String toString() {
-            return "Entry[key=" + key +
-                    "; value=" + value +
-                    "; accessCount=" + accessCount +
-                    "; lastAccessTimeMs=" + lastAccessTimeNanos + "]";
+            return "Entry[key=" + key + "; value=" + value + "; accessCount=" + accessCount + "; lastAccessTimeMs=" + lastAccessTimeNanos + "]";
         }
 
         public int hashCode() {
@@ -102,11 +95,10 @@ class LFUCache {
         }
 
         public boolean equals(Object e) {
-            if (!(e instanceof Entry)) {
+            if (!(e instanceof Entry entry)) {
                 return false;
             }
 
-            Entry entry = (Entry) e;
             return key == entry.key && value == entry.value;
         }
     }

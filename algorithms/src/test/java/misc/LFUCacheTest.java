@@ -2,7 +2,9 @@ package misc;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LFUCacheTest {
     /*
@@ -18,17 +20,17 @@ class LFUCacheTest {
         cache.put(2, 2);
         cache.put(1, 1);
 
-        assertEquals(2, cache.get(2));
-        assertEquals(1, cache.get(1));
-        assertEquals(2, cache.get(2));
+        assertEquals(2, cache.get(2).get());
+        assertEquals(1, cache.get(1).get());
+        assertEquals(2, cache.get(2).get());
 
         cache.put(3, 3);
         cache.put(4, 4);
 
-        assertEquals(-1, cache.get(3));
-        assertEquals(2, cache.get(2));
-        assertEquals(1, cache.get(1));
-        assertEquals(4, cache.get(4));
+        assertTrue(cache.get(3).isEmpty());
+        assertEquals(2, cache.get(2).get());
+        assertEquals(1, cache.get(1).get());
+        assertEquals(4, cache.get(4).get());
     }
 
     /*
@@ -44,18 +46,18 @@ class LFUCacheTest {
         cache.put(1, 1);
         cache.put(2, 2);
 
-        assertEquals(1, cache.get(1));
+        assertEquals(1, cache.get(1).get());
 
         cache.put(3, 3);
 
-        assertEquals(-1, cache.get(2));
-        assertEquals(3, cache.get(3));
+        assertTrue(cache.get(2).isEmpty());
+        assertEquals(3, cache.get(3).get());
 
         cache.put(4, 4);
 
-        assertEquals(-1, cache.get(1));
-        assertEquals(3, cache.get(3));
-        assertEquals(4, cache.get(4));
+        assertTrue(cache.get(1).isEmpty());
+        assertEquals(3, cache.get(3).get());
+        assertEquals(4, cache.get(4).get());
     }
 
     /*
@@ -70,7 +72,7 @@ class LFUCacheTest {
         cache.put(2, 2);
         cache.put(4, 4);
 
-        assertEquals(2, cache.get(2));
+        assertEquals(2, cache.get(2).get());
     }
 
     /*
@@ -82,15 +84,16 @@ class LFUCacheTest {
     @Test
     void setFour() {
         LFUCache cache = new LFUCache(2);
-        assertEquals(-1, cache.get(2));
+        assertThat(cache.get(2)).isEmpty();
+        assertThat(cache.get(2)).isEmpty();
 
         cache.put(2, 6);
-        assertEquals(-1, cache.get(1));
+        assertThat(cache.get(1)).isEmpty();
 
         cache.put(1, 5);
         cache.put(1, 2);
 
-        assertEquals(2, cache.get(1));
-        assertEquals(6, cache.get(2));
+        assertThat(cache.get(1).get()).isEqualTo(2);
+        assertThat(cache.get(2).get()).isEqualTo(6);
     }
 }
