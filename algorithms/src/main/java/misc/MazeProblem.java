@@ -27,16 +27,16 @@ public class MazeProblem {
 
         Map<Tuple, Long> memo = new HashMap<>();
 
-        for (int i = 1; i < n + 1; i++) {
+        for (int i = 1; i <= n; i++) {
             memo.put(Tuple.of(i, 1), 1L);
         }
 
-        for (int i = 1; i < m + 1; i++) {
+        for (int i = 1; i <= m; i++) {
             memo.put(Tuple.of(1, i), 1L);
         }
 
-        for (int i = 2; i < n + 1; i++) {
-            for (int j = 2; j < m + 1; j++) {
+        for (int i = 2; i <= n; i++) {
+            for (int j = 2; j <= m; j++) {
                 memo.put(Tuple.of(i, j), memo.get(Tuple.of(i - 1, j)) + memo.get(Tuple.of(i, j - 1)));
             }
         }
