@@ -36,9 +36,11 @@ public class GreetingClient {
         GreetingClient greetingClient = new GreetingClient("localhost", 8888);
         try {
             greetingClient.greet(args[0]);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             greetingClient.shutdown();
         }
     }

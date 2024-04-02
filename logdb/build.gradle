@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'idea'
     id "com.google.protobuf" version "0.9.4"
 }
 
@@ -9,7 +8,7 @@ version '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(20)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -18,17 +17,17 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.protobuf:protobuf-java:3.14.0'
+    implementation 'com.google.protobuf:protobuf-java:3.19.6'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
-tasks.withType(JavaCompile).all {
-    options.compilerArgs += ['--enable-preview', '-source', '20']
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += '--enable-preview'
 }
 
-tasks.withType(Test).all {
+tasks.withType(Test).configureEach {
     jvmArgs += '--enable-preview'
 }
 

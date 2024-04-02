@@ -39,7 +39,8 @@ public class LogDbFile {
     LogDbFile(final Path filePath, boolean isNew, final OpenOption openOption) throws IOException {
         if (isNew) {
             createFile(filePath);
-        } else {
+        }
+        else {
             mountFile(filePath, openOption);
             if (openOption == READ) {
                 isReadOnly = true;
