@@ -2,20 +2,20 @@ package misc;
 
 public class MyAtoi {
     public static int myAtoi(String s) {
-        if (s == null || s.length() == 0) return 0;
+        if (s == null || s.length() == 0) {return 0;}
 
         int i = 0;
         char[] chars = s.toCharArray();
         for (; i < chars.length; i++) {
-            if (chars[i] != ' ') break;
+            if (chars[i] != ' ') {break;}
         }
 
-        if (i == chars.length) return 0;
+        if (i == chars.length) {return 0;}
 
         boolean isPositive = true;
 
         if (chars[i] == '-' || chars[i] == '+') {
-            if (chars[i] == '-') isPositive = false;
+            if (chars[i] == '-') {isPositive = false;}
 
             ++i;
         }
@@ -23,7 +23,7 @@ public class MyAtoi {
         int value = 0;
 
         for (; i < chars.length; i++) {
-            if (!Character.isDigit(chars[i])) break;
+            if (!Character.isDigit(chars[i])) {break;}
 
             if (value > Integer.MAX_VALUE / 10 || value == Integer.MAX_VALUE / 10 && chars[i] - '0' > Integer.MAX_VALUE % 10) {
                 return isPositive ? Integer.MAX_VALUE : Integer.MIN_VALUE;

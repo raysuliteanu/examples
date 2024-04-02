@@ -6,12 +6,6 @@ import java.util.Stack;
 
 public class TwoEqualBinaryTrees {
 
-    static class TreeNode {
-        int value;
-        TreeNode left;
-        TreeNode right;
-    }
-
     public boolean isEqualRecursive(TreeNode one, TreeNode two) {
         if (one == null && two == null) {
             return true;

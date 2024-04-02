@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TwoEqualBinaryTreesTest {
     @Test
     void equal() {
-        TwoEqualBinaryTrees.TreeNode one = createTree();
-        TwoEqualBinaryTrees.TreeNode two = createTree();
+        TreeNode one = createTree();
+        TreeNode two = createTree();
 
         assertTrue(new TwoEqualBinaryTrees().isEqualRecursive(one, two));
         assertTrue(new TwoEqualBinaryTrees().isEqualNonRecursive(one, two));
@@ -17,8 +17,8 @@ class TwoEqualBinaryTreesTest {
 
     @Test
     void unequalSize() {
-        TwoEqualBinaryTrees.TreeNode one = createTree();
-        TwoEqualBinaryTrees.TreeNode two = createTree();
+        TreeNode one = createTree();
+        TreeNode two = createTree();
         two.left.right = null;
 
         assertFalse(new TwoEqualBinaryTrees().isEqualRecursive(one, two));
@@ -27,30 +27,30 @@ class TwoEqualBinaryTreesTest {
 
     @Test
     void unequalValue() {
-        TwoEqualBinaryTrees.TreeNode one = createTree();
-        TwoEqualBinaryTrees.TreeNode two = createTree();
+        TreeNode one = createTree();
+        TreeNode two = createTree();
         two.right.left.value = 666;
 
         assertFalse(new TwoEqualBinaryTrees().isEqualRecursive(one, two));
         assertFalse(new TwoEqualBinaryTrees().isEqualNonRecursive(one, two));
     }
 
-    private TwoEqualBinaryTrees.TreeNode createTree() {
-        TwoEqualBinaryTrees.TreeNode tree = new TwoEqualBinaryTrees.TreeNode();
+    private TreeNode createTree() {
+        TreeNode tree = new TreeNode();
         tree.value = 1;
-        tree.left = new TwoEqualBinaryTrees.TreeNode();
+        tree.left = new TreeNode();
         tree.left.value = 2;
-        tree.right = new TwoEqualBinaryTrees.TreeNode();
+        tree.right = new TreeNode();
         tree.right.value = 3;
 
-        tree.left.left = new TwoEqualBinaryTrees.TreeNode();
+        tree.left.left = new TreeNode();
         tree.left.left.value = 4;
-        tree.left.right = new TwoEqualBinaryTrees.TreeNode();
+        tree.left.right = new TreeNode();
         tree.left.right.value = 5;
 
-        tree.right.left = new TwoEqualBinaryTrees.TreeNode();
+        tree.right.left = new TreeNode();
         tree.right.left.value = 6;
-        tree.right.right = new TwoEqualBinaryTrees.TreeNode();
+        tree.right.right = new TreeNode();
         tree.right.right.value = 7;
 
         return tree;

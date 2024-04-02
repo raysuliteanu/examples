@@ -22,7 +22,8 @@ public class ConcatenatedWords {
                         ++countWords;
                         System.out.println("counting " + current.word);
                     }
-                } else {
+                }
+                else {
                     valid = false;
                     current = root;
                 }

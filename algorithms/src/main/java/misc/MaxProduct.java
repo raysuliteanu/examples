@@ -76,14 +76,16 @@ public class MaxProduct {
                 while (reader.ready()) {
                     huge[cnt++] = Integer.parseInt(reader.readLine());
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
 
             System.out.println("read " + cnt + " values from numbers.txt");
             System.out.println(maxProduct.maxProduct(huge));
             System.out.println(maxProduct.numSubarrayProductLessThanK(huge, 100));
-        } else {
+        }
+        else {
             System.out.println("can't open numbers.txt");
         }
     }

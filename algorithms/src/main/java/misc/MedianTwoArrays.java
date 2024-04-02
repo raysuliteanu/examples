@@ -11,7 +11,7 @@ public class MedianTwoArrays {
         Arrays.sort(combined);
 
         return combined.length % 2 == 0 ?
-                (combined[(combined.length / 2) - 1] + combined[combined.length / 2]) / 2.0 :
-                combined[combined.length / 2];
+               (combined[(combined.length / 2) - 1] + combined[combined.length / 2]) / 2.0 :
+               combined[combined.length / 2];
     }
 }

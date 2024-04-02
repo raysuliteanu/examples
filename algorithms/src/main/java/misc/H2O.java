@@ -65,15 +65,18 @@ class H2O {
                 threads.add(new Thread(() -> {
                     try {
                         h2O.hydrogen(() -> System.out.println("H"));
-                    } catch (InterruptedException e) {
+                    }
+                    catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }, "H" + hCount++));
-            } else if (c == 'O') {
+            }
+            else if (c == 'O') {
                 threads.add(new Thread(() -> {
                     try {
                         h2O.oxygen(() -> System.out.println("O"));
-                    } catch (InterruptedException e) {
+                    }
+                    catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }, "O" + oCount++));

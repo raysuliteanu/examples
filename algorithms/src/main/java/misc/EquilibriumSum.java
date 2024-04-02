@@ -18,7 +18,8 @@ public class EquilibriumSum {
                 if (leftSum == rightSum) {
                     return i;
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 break;
             }
         }

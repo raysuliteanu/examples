@@ -22,7 +22,7 @@ public class IsNumber {
     private static final Pattern pattern = Pattern.compile(REGEX);
 
     public static boolean isNumber(String s) {
-        if (s == null) return false;
+        if (s == null) {return false;}
         return pattern.matcher(s).matches();
 
     }

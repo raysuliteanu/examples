@@ -1,5 +1,12 @@
 package misc;
 
+import lombok.extern.java.Log;
+import org.jsoup.Connection;
+import org.jsoup.HttpStatusException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,13 +17,6 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
-
-import lombok.extern.java.Log;
-import org.jsoup.Connection;
-import org.jsoup.HttpStatusException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 @Log
 public class Crawler {
@@ -56,14 +56,17 @@ public class Crawler {
                                     tasks.add(crawlerTask.fork());
                                 }
                             }
-                        } catch (MalformedURLException e) {
+                        }
+                        catch (MalformedURLException e) {
                             log.warning(e.getMessage());
                         }
                     }
                 });
-            } catch (HttpStatusException e) {
+            }
+            catch (HttpStatusException e) {
                 log.warning(e.toString());
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 log.warning(e.getMessage());
             }
             tasks.forEach(ForkJoinTask::join);

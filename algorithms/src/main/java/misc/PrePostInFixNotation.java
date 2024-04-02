@@ -40,14 +40,17 @@ public abstract class PrePostInFixNotation {
             if (isOperator(operator)) {
                 // defer till we have operands
                 operators.push(operator);
-            } else if (isOperand(token)) {
+            }
+            else if (isOperand(token)) {
                 if (!isOperator(lastToken)) {
                     processOperator(operators, operands, parseLong(token));
-                } else {
+                }
+                else {
                     // defer till we have enough operands
                     operands.push(parseLong(token));
                 }
-            } else {
+            }
+            else {
                 illegalExpression(expression);
             }
 
@@ -95,7 +98,8 @@ public abstract class PrePostInFixNotation {
         try {
             parseLong(token);
             return true;
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             return false;
         }
     }

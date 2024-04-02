@@ -34,7 +34,8 @@ class LFUCache {
         synchronized (cache) {
             if (cache.containsKey(key)) {
                 update(key, value);
-            } else {
+            }
+            else {
                 if (cache.size() == capacity) {
                     evict();
                 }

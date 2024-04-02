@@ -55,7 +55,8 @@ public class DiningPhilosophers {
         try {
             Thread.sleep(executionDuration);
             log("party winding down");
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -68,7 +69,8 @@ public class DiningPhilosophers {
         for (Philosopher philosopher : philosophers) {
             try {
                 philosopher.join();
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -133,7 +135,8 @@ public class DiningPhilosophers {
             log("thinking");
             try {
                 Thread.sleep(ThreadLocalRandom.current().nextInt(bound));
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -154,7 +157,8 @@ public class DiningPhilosophers {
             try {
                 semaphore.acquire();
                 log("picked up fork " + number);
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -195,7 +199,8 @@ public class DiningPhilosophers {
             if (random.nextInt() % 2 == 0) {
                 forks[0].pickUp();
                 forks[1].pickUp();
-            } else {
+            }
+            else {
                 forks[1].pickUp();
                 forks[0].pickUp();
             }
@@ -206,7 +211,8 @@ public class DiningPhilosophers {
             if (random.nextInt() % 2 == 0) {
                 forks[0].putDown();
                 forks[1].putDown();
-            } else {
+            }
+            else {
                 forks[1].putDown();
                 forks[0].putDown();
             }

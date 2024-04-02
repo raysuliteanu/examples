@@ -15,7 +15,8 @@ public class DoublyLinkedList<E> implements List<E> {
 
         if (head == null) {
             head = node;
-        } else {
+        }
+        else {
             DoubleLinkNode<E> temp = head;
             while (temp.next != null) {
                 temp = temp.next;
@@ -37,7 +38,8 @@ public class DoublyLinkedList<E> implements List<E> {
 
         if (head == null) {
             head = node;
-        } else {
+        }
+        else {
             int index = 1;
             DoubleLinkNode<E> current = head;
             while (index++ < location) {
@@ -46,7 +48,8 @@ public class DoublyLinkedList<E> implements List<E> {
 
             if (current == head) {
                 head = node;
-            } else {
+            }
+            else {
                 current.next = node;
             }
 
@@ -80,7 +83,8 @@ public class DoublyLinkedList<E> implements List<E> {
         if (current == null) {
             removed = head;
             head = next.next;
-        } else {
+        }
+        else {
             removed = next;
             current.next = next.next;
         }

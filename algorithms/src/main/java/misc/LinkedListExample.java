@@ -12,7 +12,7 @@ public class LinkedListExample {
     private Node tail;
     private int size;
 
-    public Node removeAll(int val) {
+    Node removeAll(int val) {
         if (head != null) {
             removeLeading(val);
 
@@ -51,7 +51,8 @@ public class LinkedListExample {
             head = new Node();
             head.val = val;
             tail = head;
-        } else {
+        }
+        else {
             Node newNode = new Node();
             newNode.val = val;
             tail.next = newNode;

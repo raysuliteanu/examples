@@ -8,13 +8,16 @@ public class RotationCipher {
             if (aChar >= 'A' && aChar <= 'Z') {
                 char rotated = rotate(rotationFactor, aChar, 'A', 26);
                 builder.append(rotated);
-            } else if (aChar >= 'a' && aChar <= 'z') {
+            }
+            else if (aChar >= 'a' && aChar <= 'z') {
                 char rotated = rotate(rotationFactor, aChar, 'a', 26);
                 builder.append(rotated);
-            } else if (aChar >= '0' && aChar <= '9') {
+            }
+            else if (aChar >= '0' && aChar <= '9') {
                 char rotated = rotate(rotationFactor, aChar, '0', 10);
                 builder.append(rotated);
-            } else {
+            }
+            else {
                 // don't rotate punctuation
                 builder.append(aChar);
             }

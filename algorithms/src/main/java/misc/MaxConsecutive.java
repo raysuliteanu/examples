@@ -23,7 +23,8 @@ public class MaxConsecutive {
         for (int i = 0; i < data.length - 1; i++) {
             if (data[i] + 1 == data[i + 1]) {
                 ++consecutive;
-            } else {
+            }
+            else {
                 maxConsecutive = Math.max(maxConsecutive, consecutive);
                 consecutive = 1;
             }

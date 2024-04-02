@@ -88,7 +88,8 @@ public abstract class SortUtils {
     public static void forkJoinMergesort(int[] array, final int threshold) {
         if (array.length < threshold) {
             mergeSort(array);
-        } else {
+        }
+        else {
             ForkJoinPool.commonPool().invoke(new ForkJoinMerge(array));
         }
     }
@@ -104,7 +105,8 @@ public abstract class SortUtils {
         while (leftIdx < left.length && rightIdx < right.length) {
             if (left[leftIdx] < right[rightIdx]) {
                 dest[destIdx++] = left[leftIdx++];
-            } else {
+            }
+            else {
                 dest[destIdx++] = right[rightIdx++];
             }
         }

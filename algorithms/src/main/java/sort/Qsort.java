@@ -28,7 +28,8 @@ public class Qsort {
                 swap(arr, left, pivot);
                 pivot = left;
                 ++left;
-            } else {
+            }
+            else {
                 swap(arr, left, right - 1);
                 --right;
             }

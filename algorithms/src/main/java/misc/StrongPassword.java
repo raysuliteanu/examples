@@ -47,7 +47,8 @@ public class StrongPassword {
                 if (consecutiveCount == 3) {
                     tooManyRepeatingChars = true;
                 }
-            } else {
+            }
+            else {
                 consecutiveCount = 0;
             }
             lastChar = c;

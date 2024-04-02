@@ -16,7 +16,8 @@ public class MinSetSize {
         for (int val : arr) {
             if (counts.containsKey(val)) {
                 counts.put(val, counts.get(val) + 1);
-            } else {
+            }
+            else {
                 counts.put(val, 1);
             }
         }
@@ -29,7 +30,8 @@ public class MinSetSize {
             sum += count;
             if (sum >= arr.length / 2) {
                 break;
-            } else {
+            }
+            else {
                 ++setSize;
             }
         }

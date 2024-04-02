@@ -59,8 +59,8 @@ public class MazeProblem {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {return true;}
+            if (o == null || getClass() != o.getClass()) {return false;}
             Tuple tuple = (Tuple) o;
             return n == tuple.n && m == tuple.m;
         }

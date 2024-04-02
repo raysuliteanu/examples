@@ -26,7 +26,8 @@ public class Bfs {
                     if (edge[0] == node) {
                         weight = counts[edge[0] - 1];
                         otherNode = edge[1];
-                    } else if (edge[1] == node) {
+                    }
+                    else if (edge[1] == node) {
                         weight = counts[edge[1] - 1];
                         otherNode = edge[0];
                     }
@@ -37,7 +38,8 @@ public class Bfs {
                         counts[otherNode - 1] = weight + 6;
                     }
                 }
-            } else {
+            }
+            else {
                 System.out.println("already visited " + node);
             }
         }

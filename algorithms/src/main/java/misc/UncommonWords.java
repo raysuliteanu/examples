@@ -15,7 +15,8 @@ public class UncommonWords {
                 if (!bWords.contains(word)) {
                     uncommon.add(word);
                 }
-            } else {
+            }
+            else {
                 uncommon.remove(word);
             }
         }
@@ -25,7 +26,8 @@ public class UncommonWords {
                 if (!aWords.contains(word)) {
                     uncommon.add(word);
                 }
-            } else {
+            }
+            else {
                 uncommon.remove(word);
             }
         }

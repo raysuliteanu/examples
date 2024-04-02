@@ -1,16 +1,9 @@
 package misc;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static java.lang.Long.compare;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingByConcurrent;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class TopKWordsByFrequency {
     public List<String> topKFrequent(String[] words, int k) {

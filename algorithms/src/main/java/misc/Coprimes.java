@@ -1,11 +1,7 @@
 package misc;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Coprimes {
     public static void main(String[] args) {
@@ -46,7 +42,8 @@ class Coprimes {
         Vertex parentVertex = edge.vertices[0];
         if (gcd(parentVertex, vertex) == 1) {
             coprimes[vertexId] = parentVertex.id;
-        } else {
+        }
+        else {
             boolean foundGcd = false;
             while (parentVertex != null && !foundGcd) {
                 final List<Edge> list = g.edgesPerVertex.get(parentVertex.id);
@@ -55,7 +52,8 @@ class Coprimes {
                         if (gcd(e.vertices[0], parentVertex) == 1) {
                             coprimes[vertexId] = e.vertices[0].id;
                             foundGcd = true;
-                        } else {
+                        }
+                        else {
                             parentVertex = e.vertices[0];
                         }
 

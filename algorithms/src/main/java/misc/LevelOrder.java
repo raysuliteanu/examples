@@ -1,11 +1,7 @@
 package misc;
 
 import java.time.Duration;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class LevelOrder {
@@ -33,7 +29,7 @@ public class LevelOrder {
                     level.add(n.right);
                 }
 
-                vals.add(n.val);
+                vals.add(n.value);
             }
 
             result.add(vals);
@@ -64,32 +60,12 @@ public class LevelOrder {
                         if (n.right != null) {
                             level.add(n.right);
                         }
-                        return n.val;
+                        return n.value;
                     })
                     .collect(Collectors.toList()));
         }
 
         return result;
-    }
-
-    public static class TreeNode {
-        TreeNode left;
-        TreeNode right;
-        int val;
-
-        TreeNode() {
-        }
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-
     }
 
     public static void main(String[] args) {

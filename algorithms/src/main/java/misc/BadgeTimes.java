@@ -4,12 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BadgeTimes {
     // input is array of tuples of (user, time) where time is a string in HHmm format e.g. 1235 or 0521
@@ -42,7 +37,8 @@ public class BadgeTimes {
                 final Date badgeTime = badgeInTimes.get(j);
                 if (isWithinOneHour(current, badgeTime)) {
                     violations.add(badgeTime);
-                } else {
+                }
+                else {
                     break;
                 }
             }
@@ -68,7 +64,8 @@ public class BadgeTimes {
             final List<Date> dates = users.computeIfAbsent(strings[0], k -> new ArrayList<>());
             try {
                 dates.add(timeInstance.parse(strings[1]));
-            } catch (ParseException e) {
+            }
+            catch (ParseException e) {
                 throw new IllegalArgumentException(e);
             }
         }
