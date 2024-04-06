@@ -1,6 +1,12 @@
 package misc;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LruCache implements Map<Integer, Integer> {
@@ -96,7 +102,7 @@ public class LruCache implements Map<Integer, Integer> {
     public synchronized Collection<Integer> values() {
         return cache.values().stream()
                 .map(e -> e.value)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     @Override
@@ -137,15 +143,14 @@ public class LruCache implements Map<Integer, Integer> {
 
     private void update(final Entry entry, final int value) {
         lru.remove(entry);
-        final Entry newEntry = Entry.of(entry.key, value);
-        cache.put(entry.key, newEntry);
-        lru.add(newEntry);
+        entry.touch();
+        lru.add(entry);
     }
 
     private static class Entry implements Comparable<Entry> {
         final int key;
         final int value;
-        final long lastAccessTimeNanos;
+        long lastAccessTimeNanos;
 
         private Entry(final int key, final int value, final long lastAccessTimeNanos) {
             this.key = key;
@@ -155,6 +160,10 @@ public class LruCache implements Map<Integer, Integer> {
 
         static Entry of(final int key, final int value) {
             return new Entry(key, value, System.nanoTime());
+        }
+
+        void touch() {
+            lastAccessTimeNanos = System.nanoTime();
         }
 
         @Override
