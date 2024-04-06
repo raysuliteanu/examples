@@ -1,4 +1,4 @@
-package adt;
+package cache;
 
 public class LruCacheEvictionStrategy<E> implements CacheEvictionStrategy<E> {
     @Override

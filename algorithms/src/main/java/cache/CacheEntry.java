@@ -1,4 +1,4 @@
-package adt;
+package cache;
 
 import java.util.Map;
 

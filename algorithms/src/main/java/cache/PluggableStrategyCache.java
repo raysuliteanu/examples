@@ -1,6 +1,7 @@
-package adt;
+package cache;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,19 +61,20 @@ public class PluggableStrategyCache<K, V> implements Cache<K, V> {
         cache.clear();
     }
 
+
     @Override
     public Set<K> keySet() {
-        return null;
+        return Collections.emptySet();
     }
 
     @Override
     public Collection<V> values() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return null;
+        return Collections.emptySet();
     }
 
     @Override

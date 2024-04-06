@@ -1,4 +1,4 @@
-package misc;
+package cache;
 
 import java.util.Collection;
 import java.util.Collections;

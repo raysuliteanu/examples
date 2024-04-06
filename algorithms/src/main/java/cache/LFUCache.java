@@ -1,6 +1,10 @@
-package misc;
+package cache;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.PriorityQueue;
 
 class LFUCache {
     private final int capacity;
