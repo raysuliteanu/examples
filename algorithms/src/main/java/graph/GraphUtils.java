@@ -1,16 +1,23 @@
 package graph;
 
-import adt.MultiwayHeapPriorityQueue;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
-import java.util.*;
+import adt.MultiwayHeapPriorityQueue;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
+import static java.lang.String.format;
 
 public abstract class GraphUtils {
     public static final String WEIGHT = "weight";
 
-    public static Pair<Edge[], Double[]> dijkstra(final Graph graph, final Vertex<?> startVertex) {
+    public static Tuple<Edge[], Double[]> dijkstra(final Graph graph, final Vertex<?> startVertex) {
         int size = graph.countVertices();
         Double[] weights = new Double[size];
         Edge[] spanningTree = new Edge[size];
@@ -47,25 +54,25 @@ public abstract class GraphUtils {
             }
         }
 
-        return Pair.of(spanningTree, weights);
+        return Tuple.of(spanningTree, weights);
     }
 
-    public static class Pair<P1, P2> {
+    public static class Tuple<P1, P2> {
         P1 one;
         P2 two;
 
-        public Pair(final P1 one, final P2 two) {
+        public Tuple(final P1 one, final P2 two) {
             this.one = one;
             this.two = two;
         }
 
-        public static <P1, P2> Pair<P1, P2> of(P1 one, P2 two) {
-            return new Pair<>(one, two);
+        public static <P1, P2> Tuple<P1, P2> of(P1 one, P2 two) {
+            return new Tuple<>(one, two);
         }
 
         @Override
         public String toString() {
-            return "Pair:\n" + one + "\n" + two;
+            return format("(%s, %s)", one, two);
         }
     }
 

@@ -6,14 +6,8 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import static graph.GraphUtils.breadthFirstTraversal;
-import static graph.GraphUtils.depthFirstTraversal;
-import static graph.GraphUtils.dijkstra;
-import static graph.GraphUtils.isValidBST;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static graph.GraphUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GraphTest {
 
@@ -74,8 +68,8 @@ public class GraphTest {
     void dijkstraSPT() {
         final Vertex<?> root = Vertex.of(0);
         final Graph graph = simpleGraphWithWeights(root);
-        final GraphUtils.Pair<Edge[], Double[]> pair = dijkstra(graph, root);
-        final Double[] weights = pair.two;
+        final GraphUtils.Tuple<Edge[], Double[]> tuple = dijkstra(graph, root);
+        final Double[] weights = tuple.two;
         final Double[] expected = {0.0, 0.41, 0.8200000000000001, 0.86, 0.5, 0.29};
         assertArrayEquals(expected, weights);
     }
