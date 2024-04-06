@@ -72,7 +72,6 @@ public class DefaultTrie implements Trie {
         List<TrieNode> wordNodes = bfsTrieNodesThatAreFullWords(current);
 
         return wordNodes.stream()
-                .filter(node -> node.endOfWord)
                 .map(node -> node.content)
                 .collect(Collectors.toList());
     }
