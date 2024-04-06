@@ -1,8 +1,43 @@
 package misc;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 class SolutionSums {
+    public int countPairs(int[] arr, int k) {
+        int i = 0, j = arr.length - 1;
+
+        if (arr[i] + arr[j] < k) {
+            return 0;
+        }
+
+        while (arr[j] > k) {
+            --j;
+        }
+
+        int count = 0;
+
+        while (i < j) {
+            int sum = arr[i] + arr[j];
+            if (sum == k) {
+                ++count;
+                ++i;
+                --j;
+            }
+            else if (sum > k) {
+                --j;
+            }
+            else {
+                ++i;
+            }
+        }
+
+        return count;
+    }
+
     public int twoSumLessThanK(int[] nums, int k) {
         Arrays.sort(nums);
         int offset = 0;
@@ -33,8 +68,8 @@ class SolutionSums {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < nums.length; i++) {
-            if (map.containsKey(0 - nums[i])) {
-                int index = map.get(0 - nums[i]);
+            if (map.containsKey(-nums[i])) {
+                int index = map.get(-nums[i]);
 //                return new int[] { index, i + 1};
             }
 
