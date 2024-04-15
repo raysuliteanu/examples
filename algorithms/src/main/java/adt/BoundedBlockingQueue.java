@@ -10,10 +10,7 @@ public class BoundedBlockingQueue {
     private int size;
 
     public BoundedBlockingQueue(int capacity) {
-        if (capacity < 1) {
-            throw new IllegalArgumentException("capacity must be > 0");
-        }
-
+        assert capacity > 0 : "capacity must be > 0";
         data = new int[capacity];
         semaphore = new Semaphore(capacity);
     }
@@ -33,7 +30,6 @@ public class BoundedBlockingQueue {
     }
 
     public int dequeue() throws InterruptedException {
-
         synchronized (this) {
             while (isEmpty()) {
                 wait(1);
