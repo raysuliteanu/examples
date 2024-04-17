@@ -1,6 +1,5 @@
 package misc;
 
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -51,16 +50,6 @@ public class MathArt {
         }
 
         @Override
-        public int hashCode() {
-            return Objects.hash(x, y);
-        }
-
-        @Override
-        public String toString() {
-            return "Point{x=" + x + ", y=" + y + '}';
-        }
-
-        @Override
         public int compareTo(Point o) {
             int compare = Integer.compare(x, o.x);
             if (compare == 0) {
@@ -81,16 +70,6 @@ public class MathArt {
 
         static Line of(Point start, Point end) {
             return new Line(start, end);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(start, end);
-        }
-
-        @Override
-        public String toString() {
-            return "Line{start=" + start + ", end=" + end + '}';
         }
 
         @Override
