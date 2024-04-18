@@ -92,6 +92,10 @@ public class MathArt {
 
         getLines(L, moves, vLines, hLines);
 
+        if (vLines.isEmpty() || hLines.isEmpty()) {
+            return 0;
+        }
+
         long intersections = 0;
 
         for (Line currentLine : vLines) {
