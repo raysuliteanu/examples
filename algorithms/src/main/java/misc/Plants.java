@@ -1,52 +1,57 @@
 package misc;
 
-import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * There are a number of plants in a garden. Each of the plants has been treated with some amount of pesticide.
+ * After each day, if any plant has more pesticide than the plant on its left, being weaker than the left one, it dies.
+ * <p>
+ * You are given the initial values of the pesticide in each of the plants. Determine the number of days after which no
+ * plant dies, i.e. the time after which there is no plant with more pesticide content than the plant to its left.
+ * <p>
+ * Constraints
+ * 1 <= N <= 10^5
+ * 0 <= p[i] <= 10^9
+ *
+ * @see <a href="https://www.hackerrank.com/contests/hacker-rank-problems-01/challenges/poisonous-plants">poinsonus-plants</a>
+ */
 public class Plants {
 
-    // Complete the poisonousPlants function below.
-    static int poisonousPlants(int[] p) {
-        List<Integer> list = new LinkedList<>();
+    static class Plant {
+        int pesticide;
+        boolean died;
+
+        public Plant(int pesticide) {
+            this.pesticide = pesticide;
+        }
+    }
+
+    public int poisonousPlants(int[] p) {
+        List<Plant> plants = new ArrayList<>(p.length);
         for (int i : p) {
-            list.add(i);
+            plants.add(new Plant(i));
         }
 
+        boolean died;
         int days = 0;
-
-        while (!done(list)) {
-            for (int i = 0; i < list.size() - 1; i++) {
-                if (list.get(i) < list.get(i + 1)) {
-                    list.remove(i + 1);
+        do {
+            for (int i = 1; i < plants.size(); i++) {
+                if (plants.get(i - 1).pesticide < plants.get(i).pesticide) {
+                    plants.get(i).died = true;
                 }
             }
-            ++days;
-        }
+
+            died = plants.stream().anyMatch((plant) -> plant.died);
+            if (died) {
+                plants = plants.stream()
+                        .filter((plant) -> !plant.died)
+                        .toList();
+
+                ++days;
+            }
+        } while (died);
 
         return days;
-    }
-
-    private static boolean done(final List<Integer> list) {
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i + 1) > list.get(i)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public static void main(String[] args) throws IOException {
-        int[] input = {6, 5, 8, 4, 7, 10, 9};
-//        int[] input = new int[1000];
-//        int j = 10;
-//        for (int i = 0; i < input.length; i++) {
-//            input[i] = j--;
-//            if (j == 0) {
-//                j = 10;
-//            }
-//        }
-        System.out.println(poisonousPlants(input));
     }
 }
