@@ -1,7 +1,6 @@
 package misc;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * (from <a href="https://www.metacareers.com/profile/coding_puzzles?puzzle=587690079288608">here</a>)
@@ -39,6 +38,7 @@ public class MathArt {
     static class Point implements Comparable<Point> {
         int x;
         int y;
+        int edges;
 
         public Point(int x, int y) {
             this.x = x;
@@ -47,6 +47,19 @@ public class MathArt {
 
         static Point of(int x, int y) {
             return new Point(x, y);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {return true;}
+            if (o == null || getClass() != o.getClass()) {return false;}
+            Point point = (Point) o;
+            return x == point.x && y == point.y;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, y);
         }
 
         @Override
@@ -73,6 +86,19 @@ public class MathArt {
         }
 
         @Override
+        public boolean equals(Object o) {
+            if (this == o) {return true;}
+            if (o == null || getClass() != o.getClass()) {return false;}
+            Line line = (Line) o;
+            return Objects.equals(start, line.start) && Objects.equals(end, line.end);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(start, end);
+        }
+
+        @Override
         public int compareTo(Line o) {
             int compare = start.compareTo(o.start);
             if (compare == 0) {
@@ -90,13 +116,11 @@ public class MathArt {
         final Set<Line> vLines = new TreeSet<>();
         final Set<Line> hLines = new TreeSet<>();
 
-        getLines(L, moves, vLines, hLines);
+        long intersections = setup(L, moves, vLines, hLines);
 
         if (vLines.isEmpty() || hLines.isEmpty()) {
             return 0;
         }
-
-        long intersections = 0;
 
         for (Line currentLine : vLines) {
             intersections += hLines.stream()
@@ -109,32 +133,45 @@ public class MathArt {
         return intersections;
     }
 
-    private static void getLines(int[] L, char[] moves, Set<Line> vLines, Set<Line> hLines) {
-        Point currentPoint = Point.of(0, 0);
+    private static long setup(int[] L, char[] moves, Set<Line> vLines, Set<Line> hLines) {
+        Map<Point, Point> graph = new HashMap<>();
+        Point fromPoint = Point.of(0, 0);
+        graph.put(fromPoint, fromPoint);
+        Point toPoint;
         for (int i = 0; i < L.length; i++) {
+            ++fromPoint.edges;
             switch (moves[i]) {
                 case 'U':
-                    Point newPointU = Point.of(currentPoint.x, currentPoint.y + L[i]);
-                    vLines.add(Line.of(currentPoint, newPointU));
-                    currentPoint = newPointU;
+                    toPoint = Point.of(fromPoint.x, fromPoint.y + L[i]);
+                    vLines.add(Line.of(fromPoint, toPoint));
                     break;
                 case 'D':
-                    Point newPointD = Point.of(currentPoint.x, currentPoint.y - L[i]);
-                    vLines.add(Line.of(currentPoint, newPointD));
-                    currentPoint = newPointD;
+                    toPoint = Point.of(fromPoint.x, fromPoint.y - L[i]);
+                    vLines.add(Line.of(fromPoint, toPoint));
                     break;
                 case 'L':
-                    Point newPointL = Point.of(currentPoint.x - L[i], currentPoint.y);
-                    hLines.add(Line.of(currentPoint, newPointL));
-                    currentPoint = newPointL;
+                    toPoint = Point.of(fromPoint.x - L[i], fromPoint.y);
+                    hLines.add(Line.of(fromPoint, toPoint));
                     break;
                 case 'R':
-                    Point newPointR = Point.of(currentPoint.x + L[i], currentPoint.y);
-                    hLines.add(Line.of(currentPoint, newPointR));
-                    currentPoint = newPointR;
+                    toPoint = Point.of(fromPoint.x + L[i], fromPoint.y);
+                    hLines.add(Line.of(fromPoint, toPoint));
                     break;
+                default:
+                    throw new IllegalArgumentException("invalid move: " + moves[i]);
             }
+
+            if (graph.containsKey(toPoint)) {
+                toPoint = graph.get(toPoint);
+            }
+            else {
+                graph.put(toPoint, toPoint);
+            }
+            ++toPoint.edges;
+            fromPoint = toPoint;
         }
+
+        return graph.values().stream().filter(point -> point.edges == 4).count();
     }
 
     private static boolean isVertical(Line line) {
